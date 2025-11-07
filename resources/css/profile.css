@@ -1,0 +1,117 @@
+@layer components {
+  /* ===== Página Perfil ===== */
+  .page-profile {
+    min-height: calc(100vh - 64px);
+    padding: 2rem 1rem 4rem;
+    font-family: 'Inter', sans-serif;
+    color: #064e3b;
+  }
+
+  .profile-header {
+    max-width: 1000px;
+    margin: 0 auto 2rem;
+    text-align: center;
+  }
+
+  .profile-header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #065f46;
+  }
+
+  .profile-header p {
+    color: #047857;
+    margin-top: .5rem;
+  }
+
+  /* ===== Container de cartões ===== */
+  .profile-grid {
+    display: grid;
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* ===== Cartões ===== */
+  .profile-card {
+    background: rgba(255,255,255,0.9);
+    border: 1px solid #d1fae5;
+    border-radius: 1rem;
+    box-shadow: 0 12px 30px rgba(16,185,129,.12), 0 2px 6px rgba(0,0,0,.05);
+    backdrop-filter: blur(8px) saturate(130%);
+    padding: 1.5rem 1.75rem;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+
+  .card-content form {
+    display: grid;
+    gap: 1rem;
+  }
+
+  /* ===== Inputs padrão ===== */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  select {
+    width: 100%;
+    background: #fff;
+    border: 1.5px solid #a7f3d0;
+    border-radius: .75rem;
+    padding: .8rem 1rem;
+    font-size: 1rem;
+    color: #065f46;
+    outline: none;
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+
+  input:focus, select:focus {
+    border-color: #10b981;
+    box-shadow: 0 0 0 4px rgba(16,185,129,.15);
+  }
+
+  label {
+    font-weight: 700;
+    color: #065f46;
+  }
+
+  /* ===== Mensagens e alertas ===== */
+  .text-gray-600 { color: #0f766e !important; }
+  .text-gray-800 { color: #064e3b !important; }
+
+  /* ===== Botões ===== */
+  .btn,
+  button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,.08);
+    cursor: pointer;
+  }
+
+  .btn-primary,
+  button.bg-gray-800 {
+    background: linear-gradient(90deg, #0ea5a4, #10b981);
+    color: #fff !important;
+    border: none;
+    box-shadow: 0 10px 20px rgba(16,185,129,.28);
+  }
+
+  .btn-outline {
+    background: #fff;
+    color: #065f46;
+    border: 2px solid #10b981;
+  }
+
+  /* ===== Mensagem de sucesso Jetstream ===== */
+  [x-data][x-show="show"] {
+    background: #d1fae5;
+    color: #065f46;
+    font-weight: 600;
+    padding: .5rem 1rem;
+    border-radius: .75rem;
+    border: 1px solid #a7f3d0;
+  }
+}

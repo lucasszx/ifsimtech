@@ -1,0 +1,83 @@
+@layer components {
+
+  /* ===== Card vítreo ===== */
+  .auth-card{
+    width: 100%; max-width: 440px;
+    background: rgba(255,255,255,.9);
+    border: 1px solid var(--glass);
+    border-radius: 1rem;
+    padding: 1.75rem 1.5rem 1.75rem;
+    box-shadow: 0 12px 30px rgba(16,185,129,.12), 0 2px 6px rgba(0,0,0,.05);
+    backdrop-filter: blur(8px) saturate(130%);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .auth-title{
+    font-size: 1.75rem; font-weight: 800; color: var(--ink);
+    text-align: center; margin-bottom: 1rem;
+  }
+
+  .auth-alert{
+    margin-bottom: .75rem; padding:.6rem .9rem; border-radius:.75rem;
+    background:#d1fae5; color:var(--ink); border:1px solid #a7f3d0; font-weight:700;
+  }
+
+  .auth-form{ display:grid; gap: 1rem; }
+
+  /* ===== Inputs / Labels ===== */
+  .auth-form label, .auth-form x-input-label{ font-weight:700; color:var(--ink); }
+  .input{
+    background:#fff; color:var(--ink);
+    border:1.5px solid #a7f3d0; border-radius:.75rem;
+    padding:.8rem 1rem; font-size:1rem; outline:none;
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+  .input:focus{
+    border-color: var(--brand-emerald);
+    box-shadow: 0 0 0 4px rgba(16,185,129,.15);
+  }
+  .error-list{ color:#b45309; }
+
+  /* ===== Remember / Checkbox ===== */
+  .remember{
+    display:inline-flex; align-items:center; gap:.5rem;
+    font-weight:600; color:var(--ink-soft);
+  }
+  .checkbox-brand{
+    width:1.05rem; height:1.05rem; accent-color: var(--brand-emerald);
+    border-radius:.35rem; border:1px solid #a7f3d0;
+  }
+
+  /* ===== Links / Ações ===== */
+  .auth-actions{
+    margin-top:.25rem;
+    display:flex; align-items:center; justify-content:space-between; gap:.75rem;
+  }
+  .link-emerald{
+    color: var(--brand-emerald); font-weight:700; text-decoration:none;
+    transition: color .2s ease, text-shadow .2s ease;
+  }
+
+  /* ===== Botões ===== */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding:.75rem 1.25rem; border-radius:.8rem; font-weight:800; text-decoration:none;
+    border:1px solid transparent; box-shadow:0 2px 6px rgba(0,0,0,.06);
+    transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
+  }
+  .btn-primary{
+    color:#fff !important;
+    background: linear-gradient(90deg, var(--brand-teal), var(--brand-emerald));
+    border-color: rgba(255,255,255,.25);
+    box-shadow: 0 12px 26px rgba(16,185,129,.28);
+  }
+
+  /* ===== Overrides do Breeze (tira o indigo) ===== */
+  .page-auth .text-indigo-600,
+  .page-auth .focus\:ring-indigo-500,
+  .page-auth .border-indigo-600,
+  .page-auth .ring-indigo-500{
+    color: var(--brand-emerald) !important;
+    --tw-ring-color: var(--brand-emerald) !important;
+    border-color: var(--brand-emerald) !important;
+  }
+}

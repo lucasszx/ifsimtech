@@ -1,0 +1,87 @@
+@layer components {
+  /* Página */
+  .page-narrow { max-width: 900px; margin: 0 auto; }
+  .page-title { font-size: 1.5rem; font-weight: 700; color: #065f46; margin-bottom: .75rem; }
+
+  /* Card + formulário */
+  .card { background: #fff; border-radius: 1rem; box-shadow: 0 8px 24px rgba(0,0,0,.06); padding: 1.25rem; }
+  .form { display: grid; gap: 1rem; }
+
+  /* Grids responsivos */
+  .grid-2, .grid-3 { display: grid; gap: 1rem; }
+  @media (min-width: 640px) { .grid-2 { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 640px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+
+  /* Campos */
+  .form-group { display: grid; gap: .5rem; }
+  .form-label { font-weight: 600; color: #065f46; }
+
+  .input, .select, .textarea, .file {
+    width: 100%;
+    background: #fff;
+    border: 1.5px solid #a7f3d0;
+    border-radius: .75rem;
+    padding: .7rem 1rem;
+    font-size: 1rem;
+    color: #065f46;
+    outline: none;
+    transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .textarea { min-height: 110px; resize: vertical; }
+  .input::placeholder { color: #16a34a99; }
+
+  .input:focus, .select:focus, .textarea:focus, .file:focus {
+    border-color: #10b981;
+    box-shadow: 0 0 0 4px rgba(16,185,129,.15);
+  }
+
+  .hint { font-size: .85rem; color: #0f766e; }
+
+  /* Alternativas */
+  .alt-grid { display: grid; gap: .6rem; }
+  @media (min-width: 640px) { .alt-grid { grid-template-columns: 1fr 1fr; } }
+
+  .alt-item {
+    display: flex; align-items: center; gap: .5rem;
+    border: 1.5px solid #a7f3d0; border-radius: .75rem; padding: .5rem .6rem;
+    background: #fff;
+    transition: background .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+
+  .alt-label { width: 1.5rem; text-align: right; font-weight: 800; color: #065f46; }
+  .flex1 { flex: 1; }
+
+  /* Erros */
+  .error-msg {
+    margin-top: .25rem;
+    color: #b45309;
+    background: #fef3c7;
+    border: 1px solid #fde68a;
+    padding: .5rem .75rem;
+    border-radius: .5rem;
+    font-size: .9rem;
+  }
+
+  /* Ações */
+  .form-actions { margin-top: .5rem; display: flex; gap: .75rem; flex-wrap: wrap; }
+
+  /* Botões padrão */
+  .btn {
+    display: inline-block; padding: 0.75rem 1.25rem; border-radius: 0.75rem;
+    font-weight: 600; text-decoration: none; transition: all 0.25s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,.08); border: 2px solid transparent;
+  }
+  .btn-primary { background: #10b981; color: #fff; border-color: #10b981; }
+
+  .btn-outline { background: #fff; color: #065f46; border-color: #10b981; }
+
+  /* Acessibilidade */
+  .page :where(a, button, input, select, textarea):focus-visible {
+    outline: 3px solid rgba(16,185,129,.55);
+    outline-offset: 2px;
+    border-radius: .5rem;
+  }
+
+  /* Auxiliares */
+  .w-40 { width: 10rem; }
+}

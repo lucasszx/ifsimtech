@@ -1,0 +1,79 @@
+@layer components {
+  /* Estilo geral da tela inicial (Dashboard) */
+  .dashboard {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      color: #064e3b;
+      font-family: 'Inter', sans-serif;
+  }
+
+  /* Conteúdo central */
+  .dashboard-content { max-width: 600px; }
+
+  /* Título */
+  .dashboard-content h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #065f46;
+      margin-bottom: 0.5rem;
+  }
+
+  /* Subtítulo */
+  .dashboard-content p {
+      color: #047857;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+  }
+
+  /* Botões */
+  .dashboard-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+      .dashboard-buttons {
+          flex-direction: row;
+          justify-content: center;
+      }
+  }
+
+  /* Botão base */
+  .btn {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      border-radius: 0.75rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Botão principal (verde) */
+  .btn-primary {
+      background-color: #10b981;
+      color: #fff;
+  }
+  .btn-primary:hover {
+      background-color: #059669;
+      box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+  }
+
+  /* Botão secundário */
+  .btn-outline {
+      background-color: #fff;
+      border: 2px solid #10b981;
+      color: #065f46;
+  }
+  .btn-outline:hover {
+      background-color: #ecfdf5;
+      color: #047857;
+      box-shadow: 0 4px 8px rgba(16, 185, 129, 0.2);
+  }
+}
