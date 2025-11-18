@@ -42,18 +42,18 @@ Route::middleware(['auth'])->group(function () {
     // página simples de sugestões (pode evoluir depois)
     Route::view('/suggestions', 'suggestions.index')->name('suggestions.index');
 
-    // Admin mínimo para cadastrar questões
-    Route::get('/admin/questions/create', [QuestionController::class, 'create'])->name('admin.questions.create');
-    Route::post('/admin/questions', [QuestionController::class, 'store'])->name('admin.questions.store');
+    Route::middleware(['auth', 'can:admin'])->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/questions', function () {
+            $questions = \App\Models\Question::with('options','subject','topics')->latest()->paginate(12);
+            return view('admin.questions.index', compact('questions'));
+        })->name('questions.index');
 
-    Route::get('/admin/questions', function () {
-        $questions = \App\Models\Question::with('options','subject','topic')->latest()->paginate(12);
-        return view('admin.questions.index', compact('questions'));
-    })->name('admin.questions.index');
-
-    Route::get('/admin/questions/{question}/edit',   [QuestionController::class, 'edit'])->name('admin.questions.edit');
-    Route::put('/admin/questions/{question}',        [QuestionController::class, 'update'])->name('admin.questions.update');
-    Route::delete('/admin/questions/{question}',     [QuestionController::class, 'destroy'])->name('admin.questions.destroy');
+        Route::get('/questions/create', [QuestionController::class, 'create'])->name('questions.create');
+        Route::post('/questions', [QuestionController::class, 'store'])->name('questions.store');
+        Route::get('/questions/{question}/edit', [QuestionController::class, 'edit'])->name('questions.edit');
+        Route::put('/questions/{question}', [QuestionController::class, 'update'])->name('questions.update');
+        Route::delete('/questions/{question}', [QuestionController::class, 'destroy'])->name('questions.destroy');
+    });
 
 });
 

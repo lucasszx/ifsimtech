@@ -3,10 +3,9 @@
   .nav.nav--emphatic{
     position: sticky; top: 0; z-index: 50;
     /* barra sólida + vítreo */
-    background: linear-gradient(90deg,#0ea5a4,#10b981);
+    background-color: #10b981;
     color: #fff;
     backdrop-filter: saturate(160%) blur(8px);
-    box-shadow: 0 6px 24px rgba(16,185,129,.28);
     border-bottom: 1px solid rgba(255,255,255,.08);
   }
 
@@ -18,7 +17,6 @@
 
   .nav-left{ display:flex; align-items:center; gap:1rem; }
   .nav-logo{ display:inline-flex; align-items:center; border-radius:.9rem; }
-  .nav-logo:hover{ transform: translateY(-1px); transition: transform .15s ease; }
 
   /* Força o texto branco em todos os links da navbar */
   .nav-link,
@@ -34,13 +32,6 @@
     color: #ffffff !important;
   }
 
-  /* Opcional: clarear o hover */
-  .nav-link:hover,
-  .nav-mobile-link:hover {
-    color: #fefefe !important;
-    text-shadow: 0 0 6px rgba(255,255,255,0.4);
-  }
-
   /* Usuário (desktop) */
   .nav-user{ display:none; }
   @media (min-width:1024px){ .nav-user{ display:block; } }
@@ -50,14 +41,8 @@
     padding:.55rem .8rem; border-radius:.9rem;
     border:1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.08);
     font-weight:700; color:#fff;
-    transition: border-color .2s ease, box-shadow .2s ease, background .2s ease, transform .15s ease;
   }
-  .user-trigger:hover{
-    background: rgba(255,255,255,.16);
-    border-color: rgba(255,255,255,.35);
-    box-shadow: 0 8px 24px rgba(0,0,0,.15);
-    transform: translateY(-1px);
-  }
+
   .caret-icon{ width:1rem; height:1rem; fill:currentColor; opacity:.9; }
 
   /* Hamburguer (mobile) */
@@ -66,7 +51,6 @@
   .hamburger{
     display:inline-flex; padding:.5rem; border-radius:.9rem;
     border:1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.08);
-    transition: background .2s ease, border-color .2s ease, box-shadow .2s ease, transform .15s ease;
   }
   .hamburger:hover{ background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.35); transform: translateY(-1px); }
   .hamburger-icon{ width:1.6rem; height:1.6rem; stroke:#ffffff; stroke-width:2; fill:none; }
@@ -75,7 +59,6 @@
   .nav-mobile{
     display:none;
     border-top: 1px solid rgba(255,255,255,.12);
-    background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.75));
     backdrop-filter: blur(10px);
   }
   [x-cloak]{ display:none !important; }
@@ -89,7 +72,6 @@
   .nav-mobile-link:hover{ background:#ecfdf5; transform: translateX(2px); }
   .nav-mobile-link[aria-current="page"], .nav-mobile-link.active{
     background:#10b981; color:#fff !important;
-    box-shadow: 0 8px 18px rgba(16,185,129,.25);
   }
 
   .user-card{

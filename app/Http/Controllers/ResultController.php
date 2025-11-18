@@ -8,7 +8,7 @@ class ResultController extends Controller
 {
     public function show(Attempt $attempt)
     {
-        $attempt->load(['answers.question.subject','answers.question.topic','exam.questions']);
+        $attempt->load(['answers.question.subject','answers.question.topics','exam.questions']);
 
         $bySubject = $attempt->answers->groupBy(fn($a)=>$a->question->subject->name)
             ->map(fn($g)=>[

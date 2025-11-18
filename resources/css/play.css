@@ -31,12 +31,16 @@
   .timer-wrap{ display:inline-flex; align-items:center; gap:.5rem; }
   .timer-label{ color:var(--ink-soft); font-weight:700; }
   .timer-value{
-    min-width: 64px; text-align:center; font-feature-settings: "tnum";
-    color:#fff; font-weight:800; letter-spacing:.04em;
-    background: linear-gradient(90deg,var(--brand-teal),var(--brand-emerald));
-    border:1px solid rgba(255,255,255,.25);
-    border-radius:.6rem; padding:.35rem .5rem;
-    box-shadow: 0 6px 16px rgba(16,185,129,.28);
+    min-width: 64px;
+    text-align:center;
+    font-feature-settings: "tnum";
+    color: var(--ink);          /* texto em teal escuro */
+    background: #ecfdf5;        /* fundo verde bem claro */
+    border:1px solid #a7f3d0;
+    font-weight:800;
+    letter-spacing:.04em;
+    border-radius:.6rem;
+    padding:.35rem .5rem;
   }
 
   /* Card da questão */
@@ -45,7 +49,6 @@
     border:1px solid var(--glass-border);
     border-radius: 1rem;
     padding: 1rem;
-    box-shadow: 0 12px 30px rgba(16,185,129,.12), 0 2px 6px rgba(0,0,0,.05);
     backdrop-filter: blur(8px) saturate(130%);
   }
   .q-meta{ color: var(--ink-soft); font-weight:600; margin-bottom:.5rem; }
@@ -58,7 +61,6 @@
     display:flex; align-items:flex-start; gap:.6rem;
     border: 1.5px solid #a7f3d0; border-radius:.8rem; padding:.7rem .85rem;
     background:#fff;
-    transition: border-color .18s, background .18s, box-shadow .18s, transform .12s;
     cursor: pointer;
   }
   .option input[type="radio"]{ margin-top:.15rem; accent-color: var(--brand-emerald); width:1.05rem; height:1.05rem; }
@@ -68,7 +70,6 @@
   /* estado selecionado */
   .option:has(input[type="radio"]:checked){
     border-color: var(--brand-emerald);
-    box-shadow: 0 0 0 4px rgba(16,185,129,.15);
     background:#ecfdf5;
   }
 
@@ -88,15 +89,11 @@
   .btn{
     display:inline-flex; align-items:center; justify-content:center;
     padding:.7rem 1.25rem; border-radius:.8rem; font-weight:800; text-decoration:none;
-    transition: transform .15s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease, color .2s ease;
-    box-shadow: 0 2px 6px rgba(0,0,0,.06);
     border:1px solid transparent;
   }
   .btn:disabled{ opacity:.5; cursor:not-allowed; }
   .btn-primary{
-    color:#fff; background: linear-gradient(90deg,var(--brand-teal),var(--brand-emerald));
     border-color: rgba(255,255,255,.25);
-    box-shadow: 0 12px 26px rgba(16,185,129,.28);
   }
   .btn-outline{
     background:#fff; color:var(--ink); border:2px solid var(--brand-emerald);

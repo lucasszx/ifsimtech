@@ -124,6 +124,7 @@
         window.location.href = url.toString();
       }
     }
+    
     document.getElementById('finishForm').addEventListener('submit', () => {
       clearInterval(iv);
       localStorage.removeItem(KEY_START);

@@ -59,14 +59,20 @@
                   @endif
 
                   {{-- Excluir --}}
-                  <form action="{{ route('results.destroy', $a) }}"
+                  <button type="button"
+                          class="table-link"
+                          onclick="confirmDeleteResult({{ $a->id }})">
+                      Excluir
+                  </button>
+
+                  <form id="delete-result-{{ $a->id }}"
+                        action="{{ route('results.destroy', $a) }}"
                         method="POST"
-                        class="inline-block"
-                        onsubmit="return confirm('Tem certeza que deseja excluir este simulado?');">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="table-link">Excluir</button>
+                        style="display: none;">
+                      @csrf
+                      @method('DELETE')
                   </form>
+
                 </td>
               </tr>
             @endforeach
@@ -80,3 +86,22 @@
     @endif
   </div>
 </x-app-layout>
+
+<script>
+  function confirmDeleteResult(id) {
+      Swal.fire({
+          title: "Confirmar exclusão",
+          text: "Deseja realmente excluir este simulado?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Excluir",
+          cancelButtonText: "Cancelar",
+          confirmButtonColor: "#10b981",
+          cancelButtonColor: "#6b7280",
+      }).then((result) => {
+          if (result.isConfirmed) {
+              document.getElementById('delete-result-' + id).submit();
+          }
+      });
+  }
+</script>

@@ -3,7 +3,7 @@
     <!-- Cabeçalho -->
     <div class="profile-header">
       <h1>Perfil</h1>
-      <p>Gerencie suas informações pessoais, senha e conta.</p>
+      <p>Gerencie suas informações pessoais, senha e configurações da conta.</p>
     </div>
 
     <!-- Conteúdo -->

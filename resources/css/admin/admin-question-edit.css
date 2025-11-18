@@ -1,0 +1,145 @@
+@layer components {
+
+  /* Container principal */
+  .page-wide {
+    max-width: 1700px;
+    margin: 0 auto;
+  }
+
+  .page-title {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #065f46;
+    margin-bottom: 1rem;
+  }
+
+  /* Card + grid */
+  .card {
+    background: #fff;
+    border-radius: 1rem;
+    padding: 1.5rem;
+  }
+
+  .form {
+    display: grid;
+    gap: 1.2rem;
+  }
+
+  /* ---- GRID SUPERIOR (4 colunas) ---- */
+  .grid-top-fields {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 800px) {
+    .grid-top-fields {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* ---- Campos padrão ---- */
+  .form-group {
+    display: grid;
+    gap: .5rem;
+  }
+
+  .form-label {
+    font-weight: 600;
+    color: #065f46;
+  }
+
+  .input,
+  .select,
+  .textarea,
+  .file {
+    width: 100%;
+    background: #fff;
+    border: 1.5px solid #a7f3d0;
+    border-radius: .75rem;
+    padding: .7rem 1rem;
+    font-size: 1rem;
+    color: #065f46;
+  }
+
+  /* Textarea pequena */
+  .textarea.enunciado {
+    min-height: 48px;
+    height: 28px;
+    resize: vertical;
+  }
+
+  /* Preview imagem */
+  .img-preview {
+    width: 100%;
+    max-width: 480px;
+    border-radius: .75rem;
+    border: 1px solid #d1fae5;
+    background: #f8fffb;
+  }
+
+  /* ---- GRID imagem + enunciado ---- */
+  .img-enun-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 800px) {
+    .img-enun-grid {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
+
+  /* ---- Alternativas ---- */
+  .alt-grid {
+    display: grid;
+    gap: .6rem;
+  }
+
+  @media (min-width: 640px) {
+    .alt-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .alt-item {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    padding: .6rem;
+    border-radius: .75rem;
+  }
+
+  .alt-label {
+    width: 1.5rem;
+    text-align: right;
+    font-weight: 700;
+    color: #065f46;
+  }
+
+  /* Ações */
+  .form-actions {
+    display: flex;
+    gap: .75rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .btn {
+    padding: .75rem 1.25rem;
+    border-radius: .75rem;
+    font-weight: 600;
+    border: 2px solid transparent;
+  }
+
+  .btn-primary {
+    background: #10b981;
+    color: #fff;
+  }
+
+  .btn-outline {
+    background: #fff;
+    color: #065f46;
+    border-color: #10b981;
+  }
+}

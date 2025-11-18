@@ -42,9 +42,7 @@
     border: 1px solid #d1fae5;
     border-radius: 1rem;
     padding: 1rem 1rem 1.25rem;
-    box-shadow: 0 12px 30px rgba(16,185,129,.12), 0 2px 6px rgba(0,0,0,.05);
     backdrop-filter: blur(8px) saturate(130%);
-    transition: transform .2s ease, box-shadow .2s ease;
   }
   .card-title{ font-size:1.1rem; font-weight:800; color:#065f46; margin: .25rem 0 .75rem; }
 
@@ -57,8 +55,6 @@
   .table-emerald thead{ position:relative; z-index:1; }
   .table-emerald thead::before{
     content:""; position:absolute; inset:0;
-    background: linear-gradient(90deg,#0ea5a4,#10b981);
-    box-shadow: 0 6px 24px rgba(16,185,129,.28), inset 0 -1px 0 rgba(255,255,255,.18);
     backdrop-filter: saturate(160%) blur(8px);
     border-radius: .75rem;
     z-index:0; pointer-events:none;
@@ -82,7 +78,6 @@
   }
 
   /* ===== Botões (reaproveitando sistema) ===== */
-  .btn{ display:inline-block; padding:.75rem 1.25rem; border-radius:.75rem; font-weight:700; text-decoration:none; transition: all .25s ease; box-shadow:0 2px 4px rgba(0,0,0,.08); }
-  .btn-primary{ color:#fff; background: linear-gradient(90deg,#0ea5a4,#10b981); box-shadow: 0 10px 20px rgba(16,185,129,.28); }
+  .btn{ display:inline-block; padding:.75rem 1.25rem; border-radius:.75rem; font-weight:700; text-decoration:none; transition: all .25s ease; }
   .btn-outline{ background:#fff; color:#065f46; border:2px solid #10b981; }
 }

@@ -2,10 +2,6 @@
     <!-- Barra principal -->
     <div class="nav-bar">
         <div class="nav-left">
-            <!-- Logo -->
-            <a href="{{ route('dashboard') }}" class="nav-logo">
-                <x-application-logo/>
-            </a>
 
             <!-- Links desktop -->
             <div class="nav-links">
@@ -20,6 +16,13 @@
                 <x-nav-link :href="route('results.history')" :active="request()->routeIs('results.history')" class="nav-link">
                     {{ __('Histórico') }}
                 </x-nav-link>
+                @if(auth()->user()?->is_admin)
+                <x-nav-link :href="route('admin.questions.index')"
+                            :active="request()->routeIs('admin.questions.*')"
+                            class="nav-link">
+                    {{ __('Gerenciar Questões') }}
+                </x-nav-link>
+                @endif
             </div>
         </div>
 
@@ -39,7 +42,7 @@
 
                 <x-slot name="content">
                     <x-dropdown-link :href="route('profile.edit')" class="dropdown-link">
-                        {{ __('Profile') }}
+                        {{ __('Perfil') }}
                     </x-dropdown-link>
 
                     <form method="POST" action="{{ route('logout') }}">
@@ -47,7 +50,7 @@
                         <x-dropdown-link :href="route('logout')"
                             class="dropdown-link"
                             onclick="event.preventDefault(); this.closest('form').submit();">
-                            {{ __('Log Out') }}
+                            {{ __('Sair') }}
                         </x-dropdown-link>
                     </form>
                 </x-slot>

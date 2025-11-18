@@ -10,7 +10,11 @@ class Question extends Model
     use HasFactory;
 
     protected $fillable = [
-        'subject_id','topic_id','statement','image_path','source','year'
+        'subject_id',
+        'statement',
+        'image_path',
+        'source',
+        'year'
     ];
 
     public function subject()
@@ -18,13 +22,13 @@ class Question extends Model
         return $this->belongsTo(Subject::class);
     }
 
-    public function topic()
+    public function topics()
     {
-        return $this->belongsTo(Topic::class);
+        return $this->belongsToMany(Topic::class, 'question_topic');
     }
 
     public function options()
     {
-        return $this->hasMany(QuestionOption::class); // <-- ESSENCIAL
+        return $this->hasMany(QuestionOption::class);
     }
 }

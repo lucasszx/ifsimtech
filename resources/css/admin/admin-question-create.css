@@ -1,0 +1,126 @@
+@layer components {
+
+  /* ---- CONTÊINER PRINCIPAL ---- */
+  .page-wide { 
+    max-width: 1700px; 
+    margin: 0 auto; 
+  }
+
+  .page-title { 
+    font-size: 1.7rem; 
+    font-weight: 700; 
+    color: #065f46; 
+    margin-bottom: 1rem; 
+  }
+
+  /* ---- CARD + FORM ---- */
+  .card { 
+    background: #fff; 
+    border-radius: 1rem; 
+    padding: 1.5rem; 
+  }
+
+  .form { 
+    display: grid; 
+    gap: 1.2rem; 
+  }
+
+  /* ---- GRID DOS 4 CAMPOS SUPERIORES ---- */
+  .grid-top-fields {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 800px) {
+    .grid-top-fields {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* ---- GRID IMAGEM + ENUNCIADO ---- */
+  .grid-2 {
+    display: grid;
+    gap: 1rem;
+    align-items: start;    /* mantém alinhamento no topo */
+  }
+
+  @media (min-width: 800px) {
+    .grid-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  /* ---- CAMPOS ---- */
+  .form-group { 
+    display: grid; 
+    gap: .5rem; 
+  }
+
+  .form-label { 
+    font-weight: 600; 
+    color: #065f46; 
+  }
+
+  .input, 
+  .select, 
+  .textarea,
+  .file {
+    width: 100%;
+    background: #fff;
+    border: 1.5px solid #a7f3d0;
+    border-radius: .75rem;
+    padding: .7rem 1rem;
+    font-size: 1rem;
+    color: #065f46;
+  }
+
+  /* ---- TEXTAREA PEQUENINHA ---- */
+  .textarea.enunciado {
+    min-height: 48px;
+    height: 28px;
+    resize: vertical;
+  }
+
+  /* ---- ALTERNATIVAS ---- */
+  .alt-grid { 
+    display: grid; 
+    gap: .6rem; 
+  }
+
+  @media (min-width: 640px) {
+    .alt-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .alt-item {
+    display: flex; 
+    gap: .5rem; 
+    align-items: center;
+    padding: .6rem;
+    border-radius: .75rem;
+  }
+
+  .alt-label {
+    font-weight: 700;
+    width: 1.5rem;
+    text-align: right;
+    color: #065f46;
+  }
+
+  /* ---- MENSAGEM AUXILIAR ---- */
+  .inline-hint {
+    font-size: 0.75rem;
+    color: #0f766e;
+    margin-top: 0.25rem;
+  }
+
+  /* Este é apenas um exemplo, o CSS real pode variar */
+  .select[multiple] {
+      height: auto; /* Permite que o campo se ajuste */
+      min-height: 38px; /* Altura mínima para parecer um dropdown */
+      overflow: hidden; /* Esconde o excesso da lista se não for transformada por um script */
+      /* Você provavelmente precisará de um JS para simular o clique e mostrar/esconder a lista */
+  }
+
+}

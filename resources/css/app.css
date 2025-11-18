@@ -5,9 +5,9 @@
 @import "./navbar.css";
 @import "./results.css";
 @import "./play.css";
-@import "./admin-question-form.css";
-@import "./admin-question-edit.css"; 
-@import "./admin-questions-list.css";
+@import "./admin/admin-question-create.css";
+@import "./admin/admin-question-edit.css";
+@import "./admin/admin-question-list.css";
 @import "./profile.css";
 @import "./login.css";
 

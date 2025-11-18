@@ -10,7 +10,7 @@ class AttemptController extends Controller
     public function play(Attempt $attempt, Request $req)
     {
         $attempt->load('answers');
-        $exam = $attempt->exam()->with(['questions.options','questions.subject','questions.topic'])->first();
+        $exam = $attempt->exam()->with(['questions.options','questions.subject','questions.topics'])->first();
         $ordered = $exam->questions->sortBy('pivot.order')->values();
         $total   = $ordered->count();
 

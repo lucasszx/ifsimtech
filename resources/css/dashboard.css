@@ -52,28 +52,13 @@
       font-weight: 600;
       text-decoration: none;
       transition: all 0.25s ease;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
-  /* Botão principal (verde) */
-  .btn-primary {
-      background-color: #10b981;
-      color: #fff;
-  }
-  .btn-primary:hover {
-      background-color: #059669;
-      box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
-  }
 
   /* Botão secundário */
   .btn-outline {
       background-color: #fff;
       border: 2px solid #10b981;
       color: #065f46;
-  }
-  .btn-outline:hover {
-      background-color: #ecfdf5;
-      color: #047857;
-      box-shadow: 0 4px 8px rgba(16, 185, 129, 0.2);
   }
 }
