@@ -109,20 +109,4 @@ class AttemptController extends Controller
         }
         return 1;
     }
-
-    private function updateTopicStats($userId, $topicId, $topicName, $isCorrect)
-    {
-        DB::table('attempt_question_stats')
-            ->updateOrInsert(
-                ['user_id' => $userId, 'topic_id' => $topicId],
-                [
-                    'topic_name' => $topicName,
-                    'total_attempts'  => DB::raw('total_attempts + 1'),
-                    'correct_attempts' => DB::raw('correct_attempts + ' . ($isCorrect ? 1 : 0)),
-                    'updated_at' => now(),
-                    'created_at' => now(),
-                ]
-            );
-    }
-
 }

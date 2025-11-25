@@ -6,7 +6,8 @@ use App\Http\Controllers\{
     AttemptController,
     ResultController,
     ProfileController,
-    QuestionController
+    QuestionController,
+    StudyGoalController
 };
 
 // redireciona a raiz para o dashboard (evita conflito com 'welcome')
@@ -26,7 +27,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/attempts/{attempt}/submit', [AttemptController::class, 'submit'])->name('attempts.submit');
 
     Route::post('/attempts/{attempt}/save',   [AttemptController::class, 'save'])->name('attempts.save');
-    Route::post('/attempts/{attempt}/submit', [AttemptController::class, 'submit'])->name('attempts.submit');
 
     // resultados
     Route::get('/results/{attempt}', [ResultController::class, 'show'])->name('results.show');
@@ -62,6 +62,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/results/{attempt}/topic/{topic}/errors',
         [ResultController::class, 'topicErrorsInAttempt']
     )->name('results.topic.errors');
+
+    Route::get('/study-goals', [StudyGoalController::class, 'index'])
+        ->name('study-goals.index');
+
+    Route::patch('/study-goals/{goal}/complete', [StudyGoalController::class, 'complete'])
+       ->name('study-goals.complete');
+
+    Route::get('/results/{attempt}/review', [ResultController::class, 'review'])
+        ->name('results.review')
+        ->middleware('auth');
 
 });
 

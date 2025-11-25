@@ -1,17 +1,22 @@
 <x-app-layout>
     <div class="dashboard">
         <div class="dashboard-content">
+
             <h1>Bem-vindo ao IFSimTech</h1>
-            <p>Crie simulados, acompanhe seus resultados e receba sugestões de estudo personalizadas.</p>
+            <p class="subtitle">
+                Crie simulados, acompanhe seu desempenho e receba sugestões de estudo inteligentes.
+            </p>
 
             <div class="dashboard-buttons">
-                <a href="{{ route('exams.create') }}" class="btn btn-primary">
+                <a href="{{ route('exams.create') }}" class="btn btn-primary" aria-label="Criar simulado">
                     Simulados
                 </a>
-                <a href="{{ route('results.history') }}" class="btn btn-outline">
+
+                <a href="{{ route('results.history') }}" class="btn btn-outline" aria-label="Ver histórico de resultados">
                     Histórico
                 </a>
-                <a href="{{ route('suggestions.index') }}" class="btn btn-outline">
+
+                <a href="{{ route('suggestions.index') }}" class="btn btn-outline" aria-label="Ver sugestões de estudo">
                     Sugestões
                 </a>
             </div>

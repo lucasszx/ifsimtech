@@ -465,3 +465,90 @@
       border-color: #a7f3d0 !important;
       color: #065f46 !important;
   }
+  /* ========== Animações base ========== */
+
+  @keyframes fade-up-soft {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-scale-in {
+    from {
+      opacity: 0;
+      transform: scale(.96);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .page-result {
+    animation: fade-up-soft .4s ease-out;
+  }
+
+  .card {
+    animation: fade-scale-in .3s ease-out;
+  }
+
+  .card:nth-of-type(2) { animation-delay: .05s; }
+  .card:nth-of-type(3) { animation-delay: .1s; }
+
+  /* botões com “tap” */
+  .btn,
+  .topic-see-now,
+  .topic-history-btn,
+  .filter-btn {
+    transition:
+      transform .1s ease,
+      box-shadow .15s ease,
+      background-color .15s ease,
+      border-color .15s ease,
+      color .15s ease;
+  }
+
+  .btn:active,
+  .topic-see-now:active,
+  .topic-history-btn:active,
+  .filter-btn:active {
+    transform: translateY(1px) scale(.99);
+    box-shadow: none;
+  }
+
+  /* modal animado */
+  .modal-content {
+    animation: fade-scale-in .25s ease-out;
+  }
+
+    .charts-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 900px) {
+    .charts-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .chart-block {
+    padding-top: .5rem;
+  }
+
+  .chart-title {
+    font-size: .95rem;
+    font-weight: 700;
+    color: #065f46;
+    margin-bottom: .5rem;
+  }
+
+  canvas#chartOverall,
+  canvas#chartSubjects {
+    max-width: 100%;
+  }

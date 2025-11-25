@@ -1,36 +1,47 @@
 @layer components {
-  /* Estilo geral da tela inicial (Dashboard) */
+
+  :root {
+      --green-dark: #064e3b;
+      --green-base: #065f46;
+      --green-light: #047857;
+      --green-brand: #10b981;
+  }
+
   .dashboard {
-      min-height: 70vh;
+      min-height: 80vh;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       padding: 2rem;
-      color: #064e3b;
       font-family: 'Inter', sans-serif;
   }
 
-  /* Conteúdo central */
-  .dashboard-content { max-width: 600px; }
+  .dashboard-content {
+      max-width: 600px;
+      padding: 2rem;
+  }
 
-  /* Título */
-  .dashboard-content h1 {
+  .dashboard-logo {
+      width: 95px;
+      margin-bottom: 1.5rem;
+      opacity: 0.95;
+  }
+
+  h1 {
       font-size: 2rem;
       font-weight: 700;
-      color: #065f46;
+      color: var(--green-base);
       margin-bottom: 0.5rem;
   }
 
-  /* Subtítulo */
-  .dashboard-content p {
-      color: #047857;
-      font-size: 1rem;
-      margin-bottom: 2rem;
+  .subtitle {
+      color: var(--green-light);
+      font-size: 1.1rem;
       line-height: 1.6;
+      margin-bottom: 2rem;
   }
 
-  /* Botões */
   .dashboard-buttons {
       display: flex;
       flex-direction: column;
@@ -44,21 +55,34 @@
       }
   }
 
-  /* Botão base */
   .btn {
-      display: inline-block;
-      padding: 0.75rem 2rem;
+      padding: 0.85rem 2.2rem;
       border-radius: 0.75rem;
       font-weight: 600;
-      text-decoration: none;
       transition: all 0.25s ease;
+      text-decoration: none;
   }
 
+  .btn-primary {
+      background-color: var(--green-brand);
+      color: white;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+  }
 
-  /* Botão secundário */
+  .btn-primary:hover {
+      background-color: var(--green-light);
+      transform: translateY(-2px);
+  }
+
   .btn-outline {
-      background-color: #fff;
-      border: 2px solid #10b981;
-      color: #065f46;
+      background-color: white;
+      color: var(--green-base);
+      border: 2px solid var(--green-brand);
+  }
+
+  .btn-outline:hover {
+      background-color: var(--green-brand);
+      color: white;
+      transform: translateY(-2px);
   }
 }

@@ -1,76 +1,104 @@
 <x-app-layout>
-  <div class="page page-wide">
+  <div class="admin-page premium-admin">
 
-    {{-- Cabeçalho — só mostra o botão se houver questões --}}
-    <div class="flex items-center justify-between mt-4 mb-4">
-      <h1 class="page-title">Questões cadastradas</h1>
+    {{-- HEADER --}}
+    <header class="admin-header">
+      <div class="header-left">
+        <h1>Questões cadastradas</h1>
+        <p>Gerencie, edite ou exclua questões já inseridas no sistema.</p>
+      </div>
 
-      @if(!$questions->isEmpty())
-        <a href="{{ route('admin.questions.create') }}" class="btn btn-primary btn-sm">
-          + Nova questão
-        </a>
-      @endif
-    </div>
+      <div class="header-right">
+        @if(!$questions->isEmpty())
+          <a href="{{ route('admin.questions.create') }}" class="btn-hero">
+            + Nova questão
+          </a>
+        @endif
+      </div>
+    </header>
 
-    {{-- Estado vazio --}}
+    {{-- EMPTY STATE --}}
     @if($questions->isEmpty())
-      <div class="card empty-state">
-        <p class="muted">Nenhuma questão ainda.</p>
-        <a href="{{ route('admin.questions.create') }}" class="btn btn-primary btn-sm">
-          Cadastrar questão
-        </a>
+      <div class="empty-wrap">
+        <div class="empty-card">
+          <img src="/assets/empty-questions.svg" class="empty-img" alt="">
+          <h3>Nenhuma questão cadastrada</h3>
+          <p>Comece cadastrando sua primeira questão no sistema.</p>
+
+          <a href="{{ route('admin.questions.create') }}" class="btn-start">
+            Cadastrar questão
+          </a>
+        </div>
+      </div>
+    @else
+
+      {{-- GRID DE QUESTÕES --}}
+      <div class="questions-grid">
+        @foreach($questions as $q)
+          <div class="q-card premium-q-card">
+
+            {{-- META --}}
+            <div class="q-meta">
+              <span class="meta-badge">{{ $q->subject->name ?? 'Sem matéria' }}</span>
+              <span class="meta-dot">•</span>
+              <span class="meta-topics">
+                {{ $q->topics->pluck('name')->implode(', ') ?: 'Sem tópico' }}
+              </span>
+              <span class="meta-dot">•</span>
+              <span class="meta-year">{{ $q->year ?? '—' }}</span>
+            </div>
+
+            {{-- IMAGEM --}}
+            @if($q->image_path)
+              <img src="{{ asset('storage/' . $q->image_path) }}"
+                   class="q-image"
+                   alt="Imagem da questão">
+            @endif
+
+            {{-- ENUNCIADO --}}
+            @if($q->statement)
+              <p class="q-statement">
+                {{ Str::limit($q->statement, 180) }}
+              </p>
+            @endif
+
+            {{-- ALTERNATIVAS --}}
+            <ul class="q-options">
+              @foreach($q->options->sortBy('label') as $opt)
+                <li class="q-option {{ $opt->is_correct ? 'is-correct' : '' }}">
+                  <strong>{{ $opt->label }})</strong> {{ $opt->text }}
+                </li>
+              @endforeach
+            </ul>
+
+            {{-- AÇÕES --}}
+            <div class="q-actions">
+              <a href="{{ route('admin.questions.edit', $q) }}" class="action-link edit">Editar</a>
+
+              <button type="button"
+                      class="action-link delete"
+                      onclick="confirmDelete({{ $q->id }})">
+                Excluir
+              </button>
+
+              <form id="delete-form-{{ $q->id }}"
+                    method="POST"
+                    action="{{ route('admin.questions.destroy', $q) }}"
+                    style="display:none;">
+                @csrf
+                @method('DELETE')
+              </form>
+            </div>
+
+          </div>
+        @endforeach
+      </div>
+
+      {{-- PAGINAÇÃO --}}
+      <div class="pagination-wrap">
+        {{ $questions->links() }}
       </div>
     @endif
-
-    {{-- Lista de questões --}}
-    <div class="grid-cards">
-      @foreach($questions as $q)
-        <div class="card q-card">
-          <div class="q-meta">
-            {{ $q->subject->name ?? 'Sem matéria' }} •
-            {{ $q->topics->pluck('name')->implode(', ') ?: 'Sem tópico' }} •
-            {{ $q->year ?? '—' }}
-          </div>
-
-          @if($q->image_path)
-            <img src="{{ asset('storage/' . $q->image_path) }}" class="q-image" alt="Imagem da questão">
-          @endif
-
-          @if($q->statement)
-            <p class="q-statement">{{ Str::limit($q->statement, 160) }}</p>
-          @endif
-
-          <ul class="q-options">
-            @foreach($q->options->sortBy('label') as $opt)
-              <li class="q-option {{ $opt->is_correct ? 'is-correct' : '' }}">
-                <strong>{{ $opt->label }})</strong> {{ $opt->text }}
-              </li>
-            @endforeach
-          </ul>
-
-          <div class="row-actions">
-            <a href="{{ route('admin.questions.edit', $q) }}" class="btn btn-outline btn-sm">Editar</a>
-
-            <!-- Botão de ação -->
-            <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ $q->id }})">
-              Excluir
-            </button>
-
-            <!-- Formulário oculto que será enviado -->
-            <form id="delete-form-{{ $q->id }}" method="POST" action="{{ route('admin.questions.destroy', $q) }}"
-              style="display:none;">
-              @csrf
-              @method('DELETE')
-            </form>
-          </div>
-        </div>
-      @endforeach
-    </div>
-
-    {{-- Paginação --}}
-    <div class="pagination-wrap">
-      {{ $questions->links() }}
-    </div>
 
   </div>
 </x-app-layout>
@@ -79,10 +107,10 @@
   function confirmDelete(id) {
     Swal.fire({
       title: "Confirmar exclusão",
-      text: "Tem certeza disso?",
+      text: "Deseja realmente excluir esta questão?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Sim",
+      confirmButtonText: "Excluir",
       cancelButtonText: "Cancelar",
       confirmButtonColor: "#10b981",
       cancelButtonColor: "#6b7280",

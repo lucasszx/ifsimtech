@@ -6,6 +6,8 @@ use App\Models\Attempt;
 use App\Models\UserTopicStat;
 use App\Models\Topic;
 use App\Models\AttemptAnswer;
+use App\Models\StudyGoal;
+use Carbon\Carbon;
 
 class ResultController extends Controller{
     
@@ -70,7 +72,7 @@ class ResultController extends Controller{
             ->map(function ($stat) {
 
                 $rate = $stat->total_attempts > 0
-                    ? round(($stat->correct_attempts / $stat->total_attempts) * 100)
+                    ? round(($stat->correct_attempts / $stat->total_attempts) * 100, 0)
                     : 0;
 
                 return [
@@ -124,6 +126,60 @@ class ResultController extends Controller{
 
         $suggestions_global = $finalSuggestions;
 
+        // gera metas simples com base nos tópicos críticos/atenção
+        $goals = collect();
+
+        foreach ($byTopic as $t) {
+            $rate = $t['rate'];
+
+            if ($rate < 40) {
+                $title = "Reforçar tópico crítico: {$t['name']}";
+                $desc  = "Refaça pelo menos 10 questões de \"{$t['name']}\" até superar 70% de acerto.";
+            } elseif ($rate < 70) {
+                $title = "Revisar tópico em atenção: {$t['name']}";
+                $desc  = "Revise a teoria e refaça questões que errou no tópico \"{$t['name']}\".";
+            } else {
+                continue;
+            }
+
+            $goal = StudyGoal::firstOrCreate(
+                [
+                    'user_id'  => $attempt->user_id,
+                    'topic_id' => $t['id'],
+                    'attempt_id' => $attempt->id,
+                ],
+                [
+                    'title'       => $title,
+                    'description' => $desc,
+                    'status'      => 'pending',
+                    'due_date'    => Carbon::now()->addDays(7),
+                ]
+            );
+
+            $goals->push($goal);
+        }
+
+        $studyGoals = $goals;
+
+        // transforma $bySubject em array de objetos
+        $bySubject = $bySubject->map(function($item, $name){
+            return [
+                'subject' => $name,
+                'total'   => $item['total'],
+                'hits'    => $item['hits'],
+                'rate'    => $item['rate'],
+            ];
+        })->values()->toArray();
+
+        // transforma $byTopic em array plano
+        $byTopic = $byTopic->map(fn($t)=>[
+            'id'      => $t['id'],
+            'name'    => $t['name'],
+            'subject' => $t['subject'],
+            'total'   => $t['total'],
+            'hits'    => $t['hits'],
+            'rate'    => $t['rate'],
+        ])->values()->toArray();
 
         // -----------------------------------------------
         // RETORNO PARA VIEW
@@ -133,6 +189,7 @@ class ResultController extends Controller{
             'bySubject'          => $bySubject,
             'byTopic'            => $byTopic,
             'suggestions_global' => $suggestions_global,
+            'studyGoals'     => $studyGoals,
         ]);
     }
 
@@ -221,4 +278,18 @@ class ResultController extends Controller{
 
         return response()->json($errors);
     }
+
+    public function review(Attempt $attempt){
+        $attempt->load([
+            'answers.question.options',
+            'answers.question.subject',
+            'answers.question.topics'
+        ]);
+
+        return view('results.review', [
+            'attempt' => $attempt,
+            'answers' => $attempt->answers
+        ]);
+    }
+
 }

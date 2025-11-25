@@ -39,11 +39,11 @@ class UserTopicStat extends Model
     {
         $rate = $this->rate;
 
-        if ($rate < 50) {
+        if ($rate < 40) {
             return 'Crítico';
         }
 
-        if ($rate < 80) {
+        if ($rate < 70) {
             return 'Atenção';
         }
 

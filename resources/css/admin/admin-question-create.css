@@ -1,126 +1,256 @@
 @layer components {
 
-  /* ---- CONTÊINER PRINCIPAL ---- */
-  .page-wide { 
-    max-width: 1700px; 
-    margin: 0 auto; 
+  :root {
+    --green-dark: #064e3b;
+    --green-mid: #065f46;
+    --green-light: #047857;
+    --green-brand: #10b981;
+    --green-border: #a7f3d0;
+    --soft-bg: #f0fdf4;
   }
 
-  .page-title { 
-    font-size: 1.7rem; 
-    font-weight: 700; 
-    color: #065f46; 
-    margin-bottom: 1rem; 
+  /* ===========================
+      PAGE / HERO
+  =========================== */
+  .premium-create.admin-page {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 2.5rem 1rem 4rem;
+    font-family: 'Inter', sans-serif;
   }
 
-  /* ---- CARD + FORM ---- */
-  .card { 
-    background: #fff; 
-    border-radius: 1rem; 
-    padding: 1.5rem; 
+  .create-hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
   }
 
-  .form { 
-    display: grid; 
-    gap: 1.2rem; 
+  .create-hero h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--green-mid);
   }
 
-  /* ---- GRID DOS 4 CAMPOS SUPERIORES ---- */
-  .grid-top-fields {
+  .create-hero p {
+    color: var(--green-light);
+  }
+
+  .btn-hero-outline {
+    padding: .8rem 1.4rem;
+    border-radius: .75rem;
+    border: 2px solid var(--green-brand);
+    color: var(--green-mid);
+    background: white;
+    text-decoration: none;
+    font-weight: 700;
+    transition: .2s ease;
+  }
+  .btn-hero-outline:hover {
+    background: var(--green-brand);
+    color: white;
+  }
+
+  /* ===========================
+      CARD PRINCIPAL
+  =========================== */
+  .create-card {
+    background: #fff;
+    border-radius: 1rem;
+    border: 1px solid var(--green-border);
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(15,118,110,0.08);
+    display: grid;
+    gap: 2rem;
+  }
+
+  /* ===========================
+      GRID SUPERIOR
+  =========================== */
+  .grid-fields {
     display: grid;
     gap: 1rem;
   }
 
-  @media (min-width: 800px) {
-    .grid-top-fields {
+  @media (min-width: 900px) {
+    .grid-fields {
       grid-template-columns: repeat(4, 1fr);
     }
   }
 
-  /* ---- GRID IMAGEM + ENUNCIADO ---- */
-  .grid-2 {
+  /* ===========================
+      FORM FIELDS
+  =========================== */
+  .form-group {
     display: grid;
-    gap: 1rem;
-    align-items: start;    /* mantém alinhamento no topo */
+    gap: .4rem;
   }
 
-  @media (min-width: 800px) {
-    .grid-2 {
+  .form-label {
+    font-weight: 700;
+    color: var(--green-mid);
+  }
+
+  .input,
+  .select,
+  .file,
+  .textarea {
+    width: 100%;
+    background: #ffffff;
+    border: 1.5px solid var(--green-border);
+    border-radius: .85rem;
+    padding: .7rem 1rem;
+    color: var(--green-mid);
+    font-size: .95rem;
+    outline: none;
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+
+  .input:focus,
+  .select:focus,
+  .textarea:focus {
+    border-color: var(--green-brand);
+    box-shadow: 0 0 0 3px rgba(16,185,129,.2);
+  }
+
+  .field-hint {
+    font-size: .8rem;
+    color: #6b7280;
+  }
+
+  /* ===========================
+      SELECT2 Premium
+  =========================== */
+
+  /* caixa principal */
+  .select2-container--default .select2-selection--multiple {
+    border: 1.5px solid var(--green-border) !important;
+    border-radius: .85rem !important;
+    padding: 6px 12px;
+    min-height: 44px;
+  }
+
+  /* foco */
+  .select2-container--default.select2-container--focus .select2-selection--multiple {
+    border-color: var(--green-brand) !important;
+    box-shadow: 0 0 0 3px rgba(16,185,129,.2);
+  }
+
+  /* placeholder e texto */
+  .select2-selection__placeholder,
+  .select2-selection__rendered {
+    color: var(--green-mid) !important;
+    font-weight: 600;
+  }
+
+  /* chips */
+  .select2-selection__choice {
+    background: #ecfdf5 !important;
+    border: 1px solid var(--green-brand) !important;
+    color: var(--green-mid) !important;
+    font-weight: 700 !important;
+    padding: 2px 8px !important;
+    border-radius: 6px !important;
+    margin-top: 4px !important;
+  }
+
+  .select2-selection__choice__remove {
+    color: var(--green-mid) !important;
+  }
+
+  /* ===========================
+      GRID IMAGEM + ENUNCIADO
+  =========================== */
+  .grid-img-enun {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 900px) {
+    .grid-img-enun {
       grid-template-columns: 1fr 1fr;
     }
   }
 
-  /* ---- CAMPOS ---- */
-  .form-group { 
-    display: grid; 
-    gap: .5rem; 
+  /* ===========================
+      ALTERNATIVAS PREMIUM
+  =========================== */
+  .alt-grid-premium {
+    display: grid;
+    gap: 1rem;
   }
 
-  .form-label { 
-    font-weight: 600; 
-    color: #065f46; 
-  }
-
-  .input, 
-  .select, 
-  .textarea,
-  .file {
-    width: 100%;
-    background: #fff;
-    border: 1.5px solid #a7f3d0;
-    border-radius: .75rem;
-    padding: .7rem 1rem;
-    font-size: 1rem;
-    color: #065f46;
-  }
-
-  /* ---- TEXTAREA PEQUENINHA ---- */
-  .textarea.enunciado {
-    min-height: 48px;
-    height: 28px;
-    resize: vertical;
-  }
-
-  /* ---- ALTERNATIVAS ---- */
-  .alt-grid { 
-    display: grid; 
-    gap: .6rem; 
-  }
-
-  @media (min-width: 640px) {
-    .alt-grid {
-      grid-template-columns: repeat(2, 1fr);
+  @media (min-width: 700px) {
+    .alt-grid-premium {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 
-  .alt-item {
-    display: flex; 
-    gap: .5rem; 
+  .alt-card {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: .85rem;
+    padding: .9rem;
+    display: flex;
+    gap: .8rem;
     align-items: center;
-    padding: .6rem;
-    border-radius: .75rem;
   }
 
-  .alt-label {
+  .alt-card.correct {
+    background: #ecfdf5;
+    border-color: var(--green-brand);
+  }
+
+  .alt-letter {
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--green-mid);
+  }
+
+  .alt-card.correct .alt-letter {
+    color: var(--green-brand);
+  }
+
+  /* ===========================
+      BUTTONS
+  =========================== */
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: .5rem;
+  }
+
+  .btn-primary-lg {
+    background: var(--green-brand);
+    color: white;
+    font-weight: 800;
+    padding: .85rem 2rem;
+    border-radius: .85rem;
+    box-shadow: 0 10px 25px rgba(16,185,129,.3);
+    border: none;
+    transition: .2s ease;
+  }
+
+  .btn-primary-lg:hover {
+    background: var(--green-light);
+    transform: translateY(-2px);
+  }
+
+  .btn-ghost-lg {
+    border: 2px solid var(--green-border);
+    color: var(--green-mid);
+    padding: .85rem 2rem;
+    border-radius: .85rem;
     font-weight: 700;
-    width: 1.5rem;
-    text-align: right;
-    color: #065f46;
+    background: white;
+    text-decoration: none;
   }
 
-  /* ---- MENSAGEM AUXILIAR ---- */
-  .inline-hint {
-    font-size: 0.75rem;
-    color: #0f766e;
-    margin-top: 0.25rem;
+  .btn-ghost-lg:hover {
+    background: #f9fafb;
+    border-color: var(--green-mid);
   }
-
-  /* Este é apenas um exemplo, o CSS real pode variar */
-  .select[multiple] {
-      height: auto; /* Permite que o campo se ajuste */
-      min-height: 38px; /* Altura mínima para parecer um dropdown */
-      overflow: hidden; /* Esconde o excesso da lista se não for transformada por um script */
-      /* Você provavelmente precisará de um JS para simular o clique e mostrar/esconder a lista */
-  }
-
 }
