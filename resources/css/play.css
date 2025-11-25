@@ -23,9 +23,15 @@
     display:flex; align-items:center; justify-content:space-between; margin-bottom:.75rem;
   }
   .chip{
-    display:inline-flex; align-items:center; gap:.5rem;
-    padding:.35rem .7rem; border-radius:999px;
-    background:#ecfdf5; color:var(--ink); border:1px solid #a7f3d0; font-weight:800;
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;          /* volta o espaço ENTRE blocos */
+      padding: .35rem .7rem;
+      border-radius: 999px;
+      background: #ecfdf5;
+      color: var(--ink);
+      border: 1px solid #a7f3d0;
+      font-weight: 800;
   }
   .chip .sep{ opacity:.5; }
   .timer-wrap{ display:inline-flex; align-items:center; gap:.5rem; }

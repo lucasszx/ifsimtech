@@ -55,6 +55,14 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/questions/{question}', [QuestionController::class, 'destroy'])->name('questions.destroy');
     });
 
+    Route::get('/results/topic/{topic}', [ResultController::class, 'topicDetails'])
+        ->name('results.topic')
+        ->middleware('auth');
+
+    Route::get('/results/{attempt}/topic/{topic}/errors',
+        [ResultController::class, 'topicErrorsInAttempt']
+    )->name('results.topic.errors');
+
 });
 
 // carrega rotas de autenticação (login/register/logout) do Breeze

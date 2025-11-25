@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\{Attempt, AttemptAnswer, QuestionOption};
+use App\Services\UserTopicStatsService;
 
 class AttemptController extends Controller
 {
@@ -67,9 +68,9 @@ class AttemptController extends Controller
     }
 
     // Finalizar: se incompleto, permanece in_progress; se completo, submitted
-    public function submit(Request $req, Attempt $attempt)
-    {
+    public function submit(Request $req, Attempt $attempt, UserTopicStatsService $statsService){
         $attempt->load('answers', 'exam.questions');
+
         $total    = $attempt->exam->questions->count();
         $answered = $attempt->answers->count();
         $score    = $attempt->answers->where('is_correct', true)->count();
@@ -80,14 +81,22 @@ class AttemptController extends Controller
             'status'       => $answered >= $total ? 'submitted' : 'in_progress',
         ]);
 
+        // Só atualiza estatísticas se finalizou COMPLETO
         if ($answered >= $total) {
-            // finalizado de verdade
+
+            // Atualiza histórico por tópico
+            $statsService->updateFromAttempt($attempt);
+
+            // Redireciona para tela de resultados
             return redirect()->route('results.show', $attempt);
         }
 
-        // incompleto: volta pra próxima não respondida
+        // ---- Caso incompleto, manter comportamento atual ----
         return redirect()
-            ->route('attempts.play', [$attempt, 'i' => $this->nextUnansweredIndex($attempt)])
+            ->route('attempts.play', [
+                $attempt,
+                'i' => $this->nextUnansweredIndex($attempt)
+            ])
             ->with('warning', 'Você ainda não respondeu todas as questões. O simulado foi salvo para continuar depois.');
     }
 
@@ -100,4 +109,20 @@ class AttemptController extends Controller
         }
         return 1;
     }
+
+    private function updateTopicStats($userId, $topicId, $topicName, $isCorrect)
+    {
+        DB::table('attempt_question_stats')
+            ->updateOrInsert(
+                ['user_id' => $userId, 'topic_id' => $topicId],
+                [
+                    'topic_name' => $topicName,
+                    'total_attempts'  => DB::raw('total_attempts + 1'),
+                    'correct_attempts' => DB::raw('correct_attempts + ' . ($isCorrect ? 1 : 0)),
+                    'updated_at' => now(),
+                    'created_at' => now(),
+                ]
+            );
+    }
+
 }
