@@ -552,3 +552,8 @@
   canvas#chartSubjects {
     max-width: 100%;
   }
+  
+  .bar-ok    { background: #4caf50; }
+  .bar-warn  { background: #ff9800; }
+  .bar-crit  { background: #f44336; }
+

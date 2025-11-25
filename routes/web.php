@@ -73,6 +73,9 @@ Route::middleware(['auth'])->group(function () {
         ->name('results.review')
         ->middleware('auth');
 
+    Route::get('/performance/subjects', [PerformanceController::class, 'subjects'])
+        ->middleware(['auth'])
+        ->name('performance.subjects');
 });
 
 // carrega rotas de autenticação (login/register/logout) do Breeze
