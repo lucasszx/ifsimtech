@@ -3,6 +3,10 @@
     <div class="nav-bar">
         <div class="nav-left">
 
+            <a href="{{ route('dashboard') }}" class="flex items-center">
+                <img src="/logobranco.png" class="h-8" alt="Logo">
+            </a>
+
             <!-- Links desktop -->
             <div class="nav-links">
                 <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="nav-link">

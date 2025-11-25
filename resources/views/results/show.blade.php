@@ -137,25 +137,59 @@
           </div>
         @endif
       </div>
-      
+
     </div>
     
     <!-- Sugestões -->
     <div class="card">
-      <h2 class="card-title">Sugestões de estudo</h2>
-      @if($suggestions->isEmpty())
-        <p class="muted">Bom desempenho geral! Refaça questões que errou para consolidar.</p>
-      @else
-        <ul class="suggestions">
-          @foreach($suggestions as $tip)
-            <li>
-              <span class="chip">Revisar</span>
-              <strong>{{ $tip }}</strong>
-              <span class="muted">— monte um simulado focado e aumente a dificuldade gradualmente.</span>
-            </li>
-          @endforeach
-        </ul>
-      @endif
+        <h2 class="card-title">Sugestões de estudo baseados no seu histórico</h2>
+
+        @if($suggestions_global->isEmpty())
+            <p class="muted">Seu desempenho geral está sólido! Continue revisando os pontos fracos do simulado.</p>
+        @else
+            <ul class="suggestions">
+                @foreach($suggestions_global as $item)
+
+                    @php
+                        // normaliza texto
+                        $lvl = strtolower(trim($item['level']));
+
+                        // remove acentos (versão mais completa)
+                        $lvl = strtr($lvl, [
+                            'á'=>'a','à'=>'a','ã'=>'a','â'=>'a',
+                            'é'=>'e','ê'=>'e',
+                            'í'=>'i',
+                            'ó'=>'o','ô'=>'o','õ'=>'o',
+                            'ú'=>'u',
+                            'ç'=>'c'
+                        ]);
+
+                        // define classe
+                        if ($lvl === 'critico') {
+                            $normalized = 'critico';
+                        } elseif ($lvl === 'atencao') {
+                            $normalized = 'atencao';
+                        } else {
+                            $normalized = 'ok';
+                        }
+
+                        $chipClass = "chip chip-{$normalized}";
+                    @endphp
+
+                    <li>
+                        <span class="{{ $chipClass }}">
+                            {{ $item['level'] }}
+                        </span>
+
+                        <div>
+                            <strong>{{ $item['topic'] }} — {{ $item['rate'] }}%</strong><br>
+                            <span>{{ $item['message'] }}</span>
+                        </div>
+                    </li>
+
+                @endforeach
+            </ul>
+        @endif
     </div>
   </div>
  
