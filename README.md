@@ -1,59 +1,179 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+📘 IFSIMTECH — Plataforma de Simulados para o IFSul
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+IFSIMTECH é uma plataforma web desenvolvida para auxiliar candidatos interessados em ingressar no Instituto Federal, oferecendo simulados personalizados, análise de desempenho, sugestões de estudo e um painel administrativo completo para gerenciamento de questões.
 
-## About Laravel
+Este sistema foi criado como parte de um Trabalho de Conclusão de Curso (TCC) no eixo de Desenvolvimento de Sistemas.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+🧩 Funcionalidades Principais
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+✏️ Geração de simulados personalizados
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+🧠 Resolução de questões com correção automática
 
-## Learning Laravel
+📊 Feedback detalhado de desempenho
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+🕒 Histórico de simulados realizados
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+🎯 Metas de estudo baseadas nos pontos fracos
 
-## Laravel Sponsors
+📚 Organização por matérias e tópicos
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+🛠️ Painel administrativo para:
 
-### Premium Partners
+cadastrar questões
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+editar alternativas
 
-## Contributing
+administrar tópicos
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+gerenciar matérias
 
-## Code of Conduct
+🛠️ Tecnologias Utilizadas
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+PHP 8+
 
-## Security Vulnerabilities
+Laravel 10
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+MySQL 8
 
-## License
+Blade / Tailwind CSS
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Node.js + NPM
+
+Vite (build de assets)
+
+📦 Requisitos para Rodar o Sistema
+
+Antes de instalar, certifique-se de que possui:
+
+PHP 8.1 ou superior
+
+Composer
+
+MySQL 5.7+ ou 8+
+
+Node.js (>= 16)
+
+NPM
+
+🚀 Instalação do Sistema
+1. Baixar o projeto
+
+Via Git:
+
+git clone https://github.com/lucasszx/ifsimtech.git
+cd ifsimtech
+
+
+Ou faça o download do .zip pelo GitHub e extraia.
+
+2. Instalar dependências PHP
+composer install
+
+3. Instalar dependências do frontend
+npm install
+npm run build
+
+
+Se desejar modo desenvolvimento:
+
+npm run dev
+
+4. Criar o arquivo .env
+
+O projeto já fornece um modelo de configuração.
+
+Crie o .env:
+
+cp .env.example .env
+
+
+Edite os dados do banco conforme seu ambiente:
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=ifsimtech
+DB_USERNAME=root
+DB_PASSWORD=
+
+5. Gerar a chave da aplicação
+php artisan key:generate
+
+🗄️ Banco de Dados
+
+O sistema inclui o arquivo:
+
+ifsimtech.sql
+
+
+Esse arquivo possui o banco de dados limpo e organizado para testes.
+
+5.1 Criar o banco no MySQL
+
+Crie o banco com:
+
+CREATE DATABASE ifsimtech CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+5.2 Importar o arquivo .sql
+
+No phpMyAdmin:
+
+Selecione o banco ifsimtech
+
+Clique em Importar
+
+Selecione o arquivo ifsimtech.sql
+
+Clique em Executar
+
+O banco estará pronto para uso.
+
+▶️ Executando o Sistema
+
+Após todas as etapas:
+
+php artisan serve
+
+
+Acesse no navegador:
+
+http://localhost:8000
+
+🔐 Credenciais de Acesso
+Administrador
+
+E-mail: admin@if.com
+
+Senha: 123456
+
+Permissão: Administrador (is_admin = 1)
+
+📚 Estrutura Resumida
+Pasta / Arquivo	Função
+app/	Aplicação Laravel (Models, Controllers, etc.)
+resources/views/	Views Blade
+routes/web.php	Rotas da aplicação
+public/	Arquivos públicos e assets compilados
+database/	Migrations e seeds
+ifsimtech.sql	Banco de dados preparado para importação
+.env.example	Arquivo modelo de configuração
+vite.config.js	Configuração do Vite
+🧪 Testes (opcional)
+
+Para executar testes, caso deseje:
+
+php artisan test
+
+📄 Sobre o Projeto
+
+Este sistema foi desenvolvido como parte de um Trabalho de Conclusão de Curso (TCC), cujo objetivo é:
+
+Criar uma plataforma de simulados para auxiliar candidatos no processo seletivo dos Institutos Federais, oferecendo prática, análise de desempenho e sugestões de estudo.
+
+Autor: Lucas S.
+
+📝 Licença
+
+Este projeto é destinado exclusivamente a fins acadêmicos.
+Sua utilização, modificação ou redistribuição deve respeitar os créditos ao autor.
