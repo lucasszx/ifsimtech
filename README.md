@@ -87,6 +87,10 @@ Crie o .env:
 
 cp .env.example .env
 
+Agora ANTES DE QUALQUER OUTRA COISA, editar o .env e incluir:
+
+CACHE_DRIVER=file
+SESSION_DRIVER=file
 
 Edite os dados do banco conforme seu ambiente:
 
