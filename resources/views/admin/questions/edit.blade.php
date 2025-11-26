@@ -128,3 +128,51 @@
     </form>
   </div>
 </x-app-layout>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const $subject = $('#subject_id');
+    const $topics  = $('#topics');
+
+    // Guarda todos os tópicos originais (precisa CLONAR)
+    const allOptions = $topics.find('option').clone();
+
+    // Inicia Select2
+    $topics.select2({
+        placeholder: "Selecione os tópicos",
+        width: '100%'
+    });
+
+    function filtrarTopicos() {
+        const subjectId = String($subject.val());
+
+        // Salva IDs que já estavam selecionados
+        const selecionados = $topics.val() || [];
+
+        // Limpa a lista
+        $topics.empty();
+
+        // Adiciona apenas os tópicos da matéria selecionada
+        allOptions.each(function () {
+            const topicSubject = String($(this).data('subject-id'));
+
+            if (topicSubject === subjectId) {
+                // Mantém selecionados que já pertencem a esta matéria
+                if (selecionados.includes($(this).val())) {
+                    $(this).prop('selected', true);
+                }
+                $topics.append($(this).clone());
+            }
+        });
+
+        // Atualiza select2
+        $topics.trigger('change.select2');
+    }
+
+    // Filtra quando muda matéria
+    $subject.on('change', filtrarTopicos);
+
+    // Filtra já ao carregar a página
+    filtrarTopicos();
+});
+</script>

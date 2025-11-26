@@ -9,9 +9,9 @@
     --soft-bg: #f0fdf4;
   }
 
-  /* ===========================
-      PAGE / HERO
-  =========================== */
+  /* ======================================================
+        CONTAINER PRINCIPAL DA PÁGINA CREATE
+  ====================================================== */
   .premium-create.admin-page {
     max-width: 1300px;
     margin: 0 auto;
@@ -19,7 +19,10 @@
     font-family: 'Inter', sans-serif;
   }
 
-  .create-hero {
+  /* ======================================================
+        HEADER / HERO
+  ====================================================== */
+  .premium-create .create-hero {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -28,17 +31,17 @@
     flex-wrap: wrap;
   }
 
-  .create-hero h1 {
+  .premium-create .create-hero h1 {
     font-size: 2rem;
     font-weight: 800;
     color: var(--green-mid);
   }
 
-  .create-hero p {
+  .premium-create .create-hero p {
     color: var(--green-light);
   }
 
-  .btn-hero-outline {
+  .premium-create .btn-hero-outline {
     padding: .8rem 1.4rem;
     border-radius: .75rem;
     border: 2px solid var(--green-brand);
@@ -48,15 +51,16 @@
     font-weight: 700;
     transition: .2s ease;
   }
-  .btn-hero-outline:hover {
+
+  .premium-create .btn-hero-outline:hover {
     background: var(--green-brand);
     color: white;
   }
 
-  /* ===========================
-      CARD PRINCIPAL
-  =========================== */
-  .create-card {
+  /* ======================================================
+        CARD PRINCIPAL
+  ====================================================== */
+  .premium-create .create-card {
     background: #fff;
     border-radius: 1rem;
     border: 1px solid var(--green-border);
@@ -66,37 +70,37 @@
     gap: 2rem;
   }
 
-  /* ===========================
-      GRID SUPERIOR
-  =========================== */
-  .grid-fields {
+  /* ======================================================
+        GRID SUPERIOR
+  ====================================================== */
+  .premium-create .grid-fields {
     display: grid;
     gap: 1rem;
   }
 
   @media (min-width: 900px) {
-    .grid-fields {
+    .premium-create .grid-fields {
       grid-template-columns: repeat(4, 1fr);
     }
   }
 
-  /* ===========================
-      FORM FIELDS
-  =========================== */
-  .form-group {
+  /* ======================================================
+        FORM FIELDS
+  ====================================================== */
+  .premium-create .form-group {
     display: grid;
     gap: .4rem;
   }
 
-  .form-label {
+  .premium-create .form-label {
     font-weight: 700;
     color: var(--green-mid);
   }
 
-  .input,
-  .select,
-  .file,
-  .textarea {
+  .premium-create .input,
+  .premium-create .select,
+  .premium-create .file,
+  .premium-create .textarea {
     width: 100%;
     background: #ffffff;
     border: 1.5px solid var(--green-border);
@@ -108,87 +112,47 @@
     transition: border-color .2s ease, box-shadow .2s ease;
   }
 
-  .input:focus,
-  .select:focus,
-  .textarea:focus {
+  .premium-create .input:focus,
+  .premium-create .select:focus,
+  .premium-create .textarea:focus {
     border-color: var(--green-brand);
     box-shadow: 0 0 0 3px rgba(16,185,129,.2);
   }
 
-  .field-hint {
+  .premium-create .field-hint {
     font-size: .8rem;
     color: #6b7280;
   }
 
-  /* ===========================
-      SELECT2 Premium
-  =========================== */
-
-  /* caixa principal */
-  .select2-container--default .select2-selection--multiple {
-    border: 1.5px solid var(--green-border) !important;
-    border-radius: .85rem !important;
-    padding: 6px 12px;
-    min-height: 44px;
-  }
-
-  /* foco */
-  .select2-container--default.select2-container--focus .select2-selection--multiple {
-    border-color: var(--green-brand) !important;
-    box-shadow: 0 0 0 3px rgba(16,185,129,.2);
-  }
-
-  /* placeholder e texto */
-  .select2-selection__placeholder,
-  .select2-selection__rendered {
-    color: var(--green-mid) !important;
-    font-weight: 600;
-  }
-
-  /* chips */
-  .select2-selection__choice {
-    background: #ecfdf5 !important;
-    border: 1px solid var(--green-brand) !important;
-    color: var(--green-mid) !important;
-    font-weight: 700 !important;
-    padding: 2px 8px !important;
-    border-radius: 6px !important;
-    margin-top: 4px !important;
-  }
-
-  .select2-selection__choice__remove {
-    color: var(--green-mid) !important;
-  }
-
-  /* ===========================
-      GRID IMAGEM + ENUNCIADO
-  =========================== */
-  .grid-img-enun {
+  /* ======================================================
+        GRID IMAGEM + ENUNCIADO
+  ====================================================== */
+  .premium-create .grid-img-enun {
     display: grid;
     gap: 1.5rem;
   }
 
   @media (min-width: 900px) {
-    .grid-img-enun {
+    .premium-create .grid-img-enun {
       grid-template-columns: 1fr 1fr;
     }
   }
 
-  /* ===========================
-      ALTERNATIVAS PREMIUM
-  =========================== */
-  .alt-grid-premium {
+  /* ======================================================
+        ALTERNATIVAS PREMIUM
+  ====================================================== */
+  .premium-create .alt-grid-premium {
     display: grid;
     gap: 1rem;
   }
 
   @media (min-width: 700px) {
-    .alt-grid-premium {
+    .premium-create .alt-grid-premium {
       grid-template-columns: repeat(3, 1fr);
     }
   }
 
-  .alt-card {
+  .premium-create .alt-card {
     background: #f9fafb;
     border: 1px solid #e5e7eb;
     border-radius: .85rem;
@@ -198,32 +162,32 @@
     align-items: center;
   }
 
-  .alt-card.correct {
+  .premium-create .alt-card.correct {
     background: #ecfdf5;
     border-color: var(--green-brand);
   }
 
-  .alt-letter {
+  .premium-create .alt-letter {
     font-weight: 800;
     font-size: 1rem;
     color: var(--green-mid);
   }
 
-  .alt-card.correct .alt-letter {
+  .premium-create .alt-card.correct .alt-letter {
     color: var(--green-brand);
   }
 
-  /* ===========================
-      BUTTONS
-  =========================== */
-  .form-actions {
+  /* ======================================================
+        BOTÕES
+  ====================================================== */
+  .premium-create .form-actions {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
     margin-top: .5rem;
   }
 
-  .btn-primary-lg {
+  .premium-create .btn-primary-lg {
     background: var(--green-brand);
     color: white;
     font-weight: 800;
@@ -234,12 +198,12 @@
     transition: .2s ease;
   }
 
-  .btn-primary-lg:hover {
+  .premium-create .btn-primary-lg:hover {
     background: var(--green-light);
     transform: translateY(-2px);
   }
 
-  .btn-ghost-lg {
+  .premium-create .btn-ghost-lg {
     border: 2px solid var(--green-border);
     color: var(--green-mid);
     padding: .85rem 2rem;
@@ -249,8 +213,9 @@
     text-decoration: none;
   }
 
-  .btn-ghost-lg:hover {
+  .premium-create .btn-ghost-lg:hover {
     background: #f9fafb;
     border-color: var(--green-mid);
   }
+
 }

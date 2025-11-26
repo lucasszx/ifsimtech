@@ -9,9 +9,9 @@
     --soft-bg: #f0fdf4;
   }
 
-  /* =======================
-        PÁGINA
-  ======================= */
+  /* ======================================================
+        CONTAINER PRINCIPAL
+  ====================================================== */
   .premium-admin.admin-page {
     max-width: 1200px;
     margin: 0 auto;
@@ -19,8 +19,10 @@
     font-family: 'Inter', sans-serif;
   }
 
-  /* HEADER */
-  .admin-header {
+  /* ======================================================
+        HEADER
+  ====================================================== */
+  .premium-admin .admin-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -29,43 +31,43 @@
     gap: 1rem;
   }
 
-  .admin-header h1 {
+  .premium-admin .admin-header h1 {
     font-size: 2rem;
     font-weight: 800;
     color: var(--green-mid);
     margin-bottom: .3rem;
   }
 
-  .admin-header p {
+  .premium-admin .admin-header p {
     color: var(--green-light);
   }
 
-  .btn-hero {
+  .premium-admin .btn-hero {
     padding: .75rem 1.4rem;
     border-radius: .7rem;
     background: var(--green-brand);
-    color: white !important;
+    color: #fff !important;
     font-weight: 700;
     box-shadow: 0 8px 25px rgba(16,185,129,.35);
     text-decoration: none;
     transition: .2s ease;
   }
 
-  .btn-hero:hover {
+  .premium-admin .btn-hero:hover {
     background: var(--green-light);
     transform: translateY(-2px);
   }
 
-  /* =======================
+  /* ======================================================
         EMPTY STATE
-  ======================= */
-  .empty-wrap {
+  ====================================================== */
+  .premium-admin .empty-wrap {
     display: flex;
     justify-content: center;
     margin-top: 3rem;
   }
 
-  .empty-card {
+  .premium-admin .empty-card {
     background: #fff;
     padding: 3rem 2rem;
     border-radius: 1.2rem;
@@ -75,19 +77,19 @@
     max-width: 380px;
   }
 
-  .empty-card h3 {
+  .premium-admin .empty-card h3 {
     font-size: 1.35rem;
     color: var(--green-mid);
     margin-top: 1rem;
   }
 
-  .empty-card p {
+  .premium-admin .empty-card p {
     color: #6b7280;
     margin: .5rem auto 1.5rem;
     max-width: 260px;
   }
 
-  .btn-start {
+  .premium-admin .btn-start {
     padding: .7rem 1.2rem;
     border-radius: .75rem;
     background: var(--green-brand);
@@ -96,19 +98,19 @@
     text-decoration: none;
   }
 
-  /* =======================
-        GRID
-  ======================= */
-  .questions-grid {
+  /* ======================================================
+        GRID DE QUESTÕES
+  ====================================================== */
+  .premium-admin .questions-grid {
     display: grid;
     gap: 1.25rem;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   }
 
-  /* =======================
-        CARD
-  ======================= */
-  .premium-q-card {
+  /* ======================================================
+        CARD DA QUESTÃO
+  ====================================================== */
+  .premium-admin .premium-q-card {
     background: #fff;
     border-radius: 1rem;
     padding: 1.2rem;
@@ -117,10 +119,13 @@
     display: flex;
     flex-direction: column;
     gap: .9rem;
+    height: 100%;            /* garante alinhamento uniforme */
   }
 
-  /* META */
-  .q-meta {
+  /* ======================================================
+        META
+  ====================================================== */
+  .premium-admin .q-meta {
     display: flex;
     flex-wrap: wrap;
     gap: .35rem;
@@ -129,23 +134,25 @@
     font-weight: 600;
   }
 
-  .meta-badge {
+  .premium-admin .meta-badge {
     background: #ecfdf5;
     padding: .2rem .5rem;
     border-radius: .5rem;
     font-weight: 700;
   }
 
-  .meta-dot {
+  .premium-admin .meta-dot {
     color: #6b7280;
   }
 
-  .meta-topics {
+  .premium-admin .meta-topics {
     color: var(--green-light);
   }
 
-  /* IMAGEM */
-  .q-image {
+  /* ======================================================
+        IMAGEM
+  ====================================================== */
+  .premium-admin .q-image {
     width: 100%;
     object-fit: cover;
     max-height: 200px;
@@ -154,8 +161,10 @@
     background: #f8fffb;
   }
 
-  /* ENUNCIADO */
-  .q-statement {
+  /* ======================================================
+        ENUNCIADO
+  ====================================================== */
+  .premium-admin .q-statement {
     color: var(--green-dark);
     font-size: .92rem;
     line-height: 1.4;
@@ -165,8 +174,10 @@
     overflow: hidden;
   }
 
-  /* ALTERNATIVAS */
-  .q-options {
+  /* ======================================================
+        ALTERNATIVAS
+  ====================================================== */
+  .premium-admin .q-options {
     padding-left: 0;
     list-style: none;
     display: grid;
@@ -174,51 +185,55 @@
     font-size: .88rem;
   }
 
-  .q-option strong {
+  .premium-admin .q-option strong {
     margin-right: .2rem;
   }
 
-  .q-option.is-correct {
-    color: #047857;
+  .premium-admin .q-option.is-correct {
+    color: var(--green-light);
     font-weight: 700;
   }
 
-  /* =======================
+  /* ======================================================
         AÇÕES
-  ======================= */
-  .q-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    margin-top: .5rem;
+  ====================================================== */
+  .premium-admin .q-actions {
+      margin-top: auto;
+      display: flex;
+      justify-content: flex-end;
+      gap: 1.2rem;
+      padding: .5rem .6rem .2rem .6rem;
+      align-items: center; /* Adicione esta linha */
   }
 
-  .action-link {
-    font-weight: 700;
-    text-decoration: none;
-    font-size: .88rem;
+  .premium-admin .action-link {
+      font-weight: 700;
+      text-decoration: none;
+      font-size: .88rem;
+      display: inline-flex; /* Adicione esta linha */
+      align-items: center; /* Adicione esta linha */
   }
 
-  .action-link.edit {
+  .premium-admin .action-link.edit {
     color: var(--green-brand);
   }
 
-  .action-link.edit:hover {
+  .premium-admin .action-link.edit:hover {
     text-decoration: underline;
   }
 
-  .action-link.delete {
+  .premium-admin .action-link.delete {
     color: #dc2626;
   }
 
-  .action-link.delete:hover {
+  .premium-admin .action-link.delete:hover {
     text-decoration: underline;
   }
 
-  /* =======================
+  /* ======================================================
         PAGINAÇÃO
-  ======================= */
-  .pagination-wrap {
+  ====================================================== */
+  .premium-admin .pagination-wrap {
     margin-top: 2rem;
     display: flex;
     justify-content: center;

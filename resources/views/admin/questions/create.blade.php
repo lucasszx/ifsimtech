@@ -1,7 +1,6 @@
 <x-app-layout>
   <div class="admin-page premium-create">
 
-    {{-- HEADER / HERO --}}
     <header class="create-hero">
       <div>
         <h1>Cadastrar nova questão</h1>
@@ -13,14 +12,12 @@
       </a>
     </header>
 
-    {{-- CARD PRINCIPAL --}}
     <form method="POST"
           action="{{ route('admin.questions.store') }}"
           enctype="multipart/form-data"
           class="create-card">
       @csrf
 
-      {{-- GRID SUPERIOR --}}
       <div class="grid-fields">
 
         {{-- MATÉRIA --}}
@@ -34,12 +31,14 @@
           </select>
         </div>
 
-        {{-- TÓPICOS --}}
+        {{-- TÓPICOS - Select2 --}}
         <div class="form-group">
           <label class="form-label">Tópicos</label>
-          <select name="topics[]" id="topics" class="select" multiple>
+          <select name="topics[]" id="topics" class="select-multi" multiple>
             @foreach ($topics as $topic)
-              <option value="{{ $topic->id }}" data-subject-id="{{ $topic->subject_id }}">
+              <option value="{{ $topic->id }}"
+                      data-subject-id="{{ $topic->subject_id }}"
+                      @if(!empty(old('topics')) && in_array($topic->id, old('topics'))) selected @endif>
                 {{ $topic->name }}
               </option>
             @endforeach
@@ -62,20 +61,17 @@
       {{-- IMAGEM + ENUNCIADO --}}
       <div class="grid-img-enun">
 
-        {{-- UPLOAD IMAGEM --}}
         <div class="form-group">
           <label class="form-label">Imagem da questão</label>
           <input type="file" name="image" accept="image/*" class="file">
           <p class="field-hint">Formatos aceitos: JPG/PNG • até 4MB</p>
         </div>
 
-        {{-- ENUNCIADO --}}
         <div class="form-group">
           <label class="form-label">Enunciado (opcional)</label>
           <textarea name="statement" class="textarea" rows="5"></textarea>
         </div>
       </div>
-
 
       {{-- ALTERNATIVAS --}}
       <div class="form-group">
@@ -89,7 +85,6 @@
             </div>
           @endforeach
 
-          {{-- CORRETA --}}
           <div class="alt-card correct">
             <span class="alt-letter">✔</span>
             <select name="correct_label" class="select flex1" required>
@@ -110,3 +105,50 @@
     </form>
   </div>
 </x-app-layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const $subject = $('#subject_id');
+    const $topics  = $('#topics');
+
+    // Salvar TODAS as opções originais
+    const allOptions = $topics.find('option').clone();
+
+    // Inicia Select2
+    $topics.select2({
+      placeholder: "Selecione os tópicos",
+      width: '100%'
+    });
+
+    function filtrarTopicos() {
+      const subjectId = $subject.val();
+
+      // Limpa todas opções atuais
+      $topics.empty();
+
+      if (!subjectId) {
+        // Se não escolheu matéria, mostra TUDO
+        $topics.append(allOptions);
+      } else {
+        // Adiciona somente os tópicos daquela matéria
+        allOptions.each(function () {
+          if (String($(this).data('subject-id')) === String(subjectId)) {
+            $topics.append($(this).clone());
+          }
+        });
+      }
+
+      // Atualiza Select2 com a nova lista
+      $topics.trigger('change.select2');
+    }
+
+    // Executa ao mudar matéria
+    $subject.on('change', filtrarTopicos);
+
+    // Executa na primeira carga
+    filtrarTopicos();
+  });
+</script>
+
+
+

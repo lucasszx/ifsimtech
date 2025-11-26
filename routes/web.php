@@ -76,6 +76,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/performance/subjects', [PerformanceController::class, 'subjects'])
         ->middleware(['auth'])
         ->name('performance.subjects');
+
+    // routes/web.php - CORRIGIR ESTA ROTA
+    Route::get('/admin/topics/by-subject', [QuestionController::class, 'getTopicsBySubject'])
+        ->name('admin.topics.by-subject');
 });
 
 // carrega rotas de autenticação (login/register/logout) do Breeze
