@@ -189,7 +189,6 @@
 
   .btn-outline-premium:hover:not(:disabled){
     background:var(--green-brand);
-    color:#fff;
   }
 
   .btn-outline-premium:disabled{

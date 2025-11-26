@@ -108,46 +108,50 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const $subject = $('#subject_id');
-    const $topics  = $('#topics');
+      const $subject = $('#subject_id');
+      const $topics  = $('#topics');
 
-    // Salvar TODAS as opções originais
-    const allOptions = $topics.find('option').clone();
+      // Salva todas as opções originais
+      const allOptions = $topics.find('option').clone();
 
-    // Inicia Select2
-    $topics.select2({
-      placeholder: "Selecione os tópicos",
-      width: '100%'
-    });
-
-    function filtrarTopicos() {
-      const subjectId = $subject.val();
-
-      // Limpa todas opções atuais
-      $topics.empty();
-
-      if (!subjectId) {
-        // Se não escolheu matéria, mostra TUDO
-        $topics.append(allOptions);
-      } else {
-        // Adiciona somente os tópicos daquela matéria
-        allOptions.each(function () {
-          if (String($(this).data('subject-id')) === String(subjectId)) {
-            $topics.append($(this).clone());
-          }
-        });
+      function initSelect2() {
+          $topics.select2({
+              placeholder: "Selecione os tópicos",
+              width: '100%'
+          });
       }
 
-      // Atualiza Select2 com a nova lista
-      $topics.trigger('change.select2');
-    }
+      initSelect2();
 
-    // Executa ao mudar matéria
-    $subject.on('change', filtrarTopicos);
+      function filtrarTopicos() {
+          const subjectId = $subject.val();
 
-    // Executa na primeira carga
-    filtrarTopicos();
+          // DESTROI Select2 para evitar bug
+          $topics.select2('destroy');
+
+          // Limpa e repõe apenas as opções da matéria
+          $topics.empty();
+
+          if (!subjectId) {
+              $topics.append(allOptions.clone());
+          } else {
+              allOptions.each(function () {
+                  if (String($(this).data('subject-id')) === String(subjectId)) {
+                      $topics.append($(this).clone());
+                  }
+              });
+          }
+
+          // REINICIALIZA Select2
+          initSelect2();
+      }
+
+      $subject.on('change', filtrarTopicos);
+
+      // executa ao carregar
+      filtrarTopicos();
   });
+
 </script>
 
 

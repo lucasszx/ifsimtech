@@ -7,7 +7,8 @@ use App\Http\Controllers\{
     ResultController,
     ProfileController,
     QuestionController,
-    StudyGoalController
+    StudyGoalController,
+    TopicController,
 };
 
 // redireciona a raiz para o dashboard (evita conflito com 'welcome')
@@ -80,6 +81,8 @@ Route::middleware(['auth'])->group(function () {
     // routes/web.php - CORRIGIR ESTA ROTA
     Route::get('/admin/topics/by-subject', [QuestionController::class, 'getTopicsBySubject'])
         ->name('admin.topics.by-subject');
+    
+    Route::resource('admin/topics', TopicController::class)->names('admin.topics');
 });
 
 // carrega rotas de autenticação (login/register/logout) do Breeze

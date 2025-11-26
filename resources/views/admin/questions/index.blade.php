@@ -9,6 +9,11 @@
       </div>
 
       <div class="header-right">
+        {{-- Botão para gerenciar tópicos --}}
+        <a href="{{ route('admin.topics.index') }}" class="btn-hero-outline btn-admin">
+          Gerenciar tópicos
+        </a>
+
         @if(!$questions->isEmpty())
           <a href="{{ route('admin.questions.create') }}" class="btn-hero">
             + Nova questão
@@ -27,6 +32,11 @@
 
           <a href="{{ route('admin.questions.create') }}" class="btn-start">
             Cadastrar questão
+          </a>
+
+          {{-- Acesso rápido aos tópicos mesmo no estado vazio --}}
+          <a href="{{ route('admin.topics.index') }}" class="btn-ghost-lg" style="margin-top: 12px;">
+            Gerenciar tópicos
           </a>
         </div>
       </div>

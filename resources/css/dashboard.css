@@ -87,7 +87,6 @@
 
   .btn-outline:hover {
       background-color: var(--green-brand);
-      color: white;
       transform: translateY(-2px);
   }
 }
