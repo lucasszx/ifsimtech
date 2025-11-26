@@ -133,7 +133,7 @@
 
       {{-- PAGINAÇÃO --}}
       <div class="pagination-wrap">
-        {{ $attempts->links() }}
+        {{ $attempts->links('vendor.pagination.arrows-only') }}
       </div>
 
     @endif

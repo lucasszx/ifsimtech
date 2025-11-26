@@ -13,15 +13,26 @@
             @else
                 <p class="muted">Ainda não há estatísticas suficientes para este tópico.</p>
             @endif
-
             <div class="result-actions">
-                <a href="{{ route('results.history') }}" class="btn btn-outline">Voltar</a>
+                <a href="{{ url()->previous() ?: route('results.history') }}"
+                class="btn btn-outline">
+                    Voltar
+                </a>
 
                 @if($topic->subject)
-                    <a href="{{ route('exams.create', ['subject' => $topic->subject->id]) }}"
-                       class="btn btn-primary">
-                        Gerar simulado focado
-                    </a>
+                    <form method="POST" action="{{ route('exams.store') }}">
+                        @csrf
+
+                        <input type="hidden" name="title" value="Simulado focado em {{ $topic->name }}">
+                        <input type="hidden" name="questions_count" value="10">
+
+                        <input type="hidden" name="subjects[]" value="{{ $topic->subject->id }}">
+                        <input type="hidden" name="topics[]" value="{{ $topic->id }}">
+
+                        <button class="btn btn-primary">
+                            Gerar simulado focado
+                        </button>
+                    </form>
                 @endif
             </div>
         </div>

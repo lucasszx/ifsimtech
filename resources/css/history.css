@@ -105,7 +105,7 @@
       LAYOUT PRINCIPAL
   =========================== */
   .history-layout {
-    max-width: 1100px;
+    max-width: 1250px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
@@ -223,9 +223,14 @@
   /* Ações */
   .actions-col {
     display: flex;
-    gap: 1rem;
+    align-items: center; /* Isso resolve o desalinhamento */
+    gap: .75rem;
     justify-content: flex-end;
-    font-size: .9rem;
+  }
+
+  .actions-col .table-link {
+  display: inline-block; 
+  padding: .15rem 0;      /* altura uniforme */
   }
 
   .table-link {
@@ -277,7 +282,7 @@
     line-height: 1.6;
   }
 
-  /* ===========================
+ /* ===========================
       PAGINAÇÃO
   =========================== */
   .pagination-wrap {
@@ -288,9 +293,10 @@
 
   .pagination-wrap nav {
     display: inline-flex;
-    gap: .25rem;
+    gap: .25rem; /* Isso controla o espaçamento entre os botões */
   }
 
+  /* Isso aplica o estilo de botão verde claro/borda para todos os links/spans */
   .pagination-wrap a,
   .pagination-wrap span {
     padding: .55rem .85rem;
@@ -301,11 +307,4 @@
     font-weight: 600;
     transition: background .2s ease, transform .15s ease;
   }
-
-  .pagination-wrap .active > span {
-    background: var(--green-brand);
-    color: #fff;
-    border-color: var(--green-brand);
-  }
-
 }

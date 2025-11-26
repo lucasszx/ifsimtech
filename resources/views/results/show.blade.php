@@ -104,9 +104,6 @@
                                               data-topic-id="{{ $topic['id'] }}">
                                           Ver neste simulado
                                       </button>
-
-                                      <a href="{{ route('results.topic', $topic['id']) }}"
-                                        class="topic-history-btn">Histórico</a>
                                   </div>
                               </div>
 
@@ -141,25 +138,40 @@
       @else
         <ul class="suggestions">
           @foreach($suggestions_global as $item)
-            @php
-              $lvl = strtolower(strtr($item['level'], [
-                'á'=>'a','à'=>'a','ã'=>'a','â'=>'a',
-                'é'=>'e','ê'=>'e','í'=>'i',
-                'ó'=>'o','ô'=>'o','õ'=>'o','ú'=>'u','ç'=>'c'
-              ]));
 
-              $class = $lvl === 'critico'
-                ? 'critico'
-                : ($lvl === 'atencao' ? 'atencao' : 'ok');
+            @php
+              $rate  = $item['rate'];
+              $level = $item['level'];
+              $class = $rate < 40 ? 'critico' : ($rate < 70 ? 'atencao' : 'ok');
             @endphp
 
             <li>
-              <span class="chip chip-{{ $class }}">{{ $item['level'] }}</span>
-              <div>
-                <strong>{{ $item['topic'] }} — {{ $item['rate'] }}%</strong><br>
+              <span class="chip chip-{{ $class }}">{{ $level }}</span>
+
+              <div style="width:100%;">
+                <strong>{{ $item['topic'] }} — {{ $rate }}%</strong><br>
                 <span>{{ $item['message'] }}</span>
+
+                <div class="progress" style="margin-top:.6rem;">
+                  <div class="bar 
+                      @if($rate<40) bar-crit 
+                      @elseif($rate<70) bar-warn 
+                      @else bar-ok 
+                      @endif"
+                    style="width: {{ $rate }}%;">
+                  </div>
+                </div>
+
+                <div style="margin-top:.75rem; display:flex; gap:.6rem;">
+                  <a href="{{ route('results.topic', $item['id']) }}" 
+                    class="topic-history-btn">
+                    Histórico
+                  </a>
+                </div>
+
               </div>
             </li>
+
           @endforeach
         </ul>
       @endif
@@ -184,6 +196,52 @@
         <div id="modal-body" class="modal-body"></div>
       </div>
     </div>
+
+    <!-- ======================================================
+         DESEMPENHO GERAL POR MATÉRIA
+    ======================================================= -->
+    <div class="card">
+      <h2 class="card-title">Desempenho geral por matéria</h2>
+
+      @if($global_subjects->isEmpty())
+        <p class="muted">Ainda não há dados suficientes.</p>
+
+      @else
+        <ul class="suggestions">
+          @foreach($global_subjects as $sub)
+            @php
+              $rate = $sub->rate;
+
+              // define faixa do nível
+              $level = $rate < 40 ? 'Crítico' : ($rate < 70 ? 'Atenção' : 'OK');
+
+              $class = $rate < 40
+                ? 'critico'
+                : ($rate < 70 ? 'atencao' : 'ok');
+            @endphp
+
+            <li>
+              <span class="chip chip-{{ $class }}">{{ $level }}</span>
+
+              <div style="width:100%;">
+                <strong>{{ $sub->name }} — {{ $rate }}%</strong><br>
+                <span>
+                  Total: {{ $sub->total }} questões • Acertos: {{ $sub->hits }}
+                </span>
+
+                <div class="progress" style="margin-top:.6rem;">
+                  <div class="bar @if($rate<40) bar-crit @elseif($rate<70) bar-warn @else bar-ok @endif"
+                      style="width: {{ $rate }}%;">
+                  </div>
+                </div>
+              </div>
+            </li>
+
+          @endforeach
+        </ul>
+      @endif
+    </div>
+
 
   </div>
 </x-app-layout>

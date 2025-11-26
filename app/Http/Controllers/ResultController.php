@@ -8,31 +8,41 @@ use App\Models\Topic;
 use App\Models\AttemptAnswer;
 use App\Models\StudyGoal;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ResultController extends Controller{
     
     public function show(Attempt $attempt){
-        $attempt->load(['answers.question.subject','answers.question.topics','exam.questions']);
+        $attempt->load([
+            'answers.question.subject',
+            'answers.question.topics',
+            'exam.questions'
+        ]);
 
-        // -----------------------------------------------
-        // DESEMPENHO POR MATÉRIA (já existia)
-        // -----------------------------------------------
-        $bySubject = $attempt->answers->groupBy(fn($a)=>$a->question->subject->name)
-            ->map(fn($g)=>[
-                'total' => $g->count(),
-                'hits'  => $g->where('is_correct', true)->count(),
-                'rate'  => round(100 * $g->where('is_correct', true)->count() / max(1, $g->count())),
-            ]);
+        $userId = $attempt->user_id;
 
-        // -----------------------------------------------
-        // DESEMPENHO POR TÓPICO (simulado atual)
-        // -----------------------------------------------
+        /* ============================================================
+        1. DESEMPENHO POR MATÉRIA (somente deste simulado)
+        ============================================================ */
+        $bySubject = $attempt->answers
+            ->groupBy(fn ($a) => $a->question->subject->name)
+            ->map(fn ($g, $name) => [
+                'subject' => $name,
+                'total'   => $g->count(),
+                'hits'    => $g->where('is_correct', true)->count(),
+                'rate'    => round(100 * $g->where('is_correct', true)->count() / max(1, $g->count())),
+            ])
+            ->values()
+            ->toArray();
+
+
+        /* ============================================================
+        2. DESEMPENHO POR TÓPICO (somente deste simulado)
+        ============================================================ */
         $byTopic = [];
 
         foreach ($attempt->answers as $answer) {
-            $question = $answer->question;
-
-            foreach ($question->topics as $topic) {
+            foreach ($answer->question->topics as $topic) {
 
                 if (!isset($byTopic[$topic->id])) {
                     $byTopic[$topic->id] = [
@@ -45,51 +55,69 @@ class ResultController extends Controller{
                 }
 
                 $byTopic[$topic->id]['total']++;
+
                 if ($answer->is_correct) {
                     $byTopic[$topic->id]['hits']++;
                 }
             }
         }
 
-        // calcula taxa do attempt atual
         foreach ($byTopic as &$t) {
             $t['rate'] = round(100 * $t['hits'] / max(1, $t['total']));
         }
 
-        $byTopic = collect($byTopic)->sortBy('rate');
+        $byTopic = collect($byTopic)
+            ->sortBy('rate')
+            ->values()
+            ->toArray();
 
 
-        // ============================================================
-        // SUGESTÕES INTELIGENTES (HISTÓRICO DO ALUNO)
-        // ============================================================
+        /* ============================================================
+        3. DESEMPENHO GERAL POR MATÉRIA (TODOS SIMULADOS)
+        ============================================================ */
+        $global_subjects = DB::table('attempt_answers')
+            ->join('attempts', 'attempt_answers.attempt_id', '=', 'attempts.id')
+            ->join('questions', 'attempt_answers.question_id', '=', 'questions.id')
+            ->join('subjects', 'questions.subject_id', '=', 'subjects.id')
+            ->where('attempts.user_id', $userId)
+            ->select(
+                'subjects.id',
+                'subjects.name',
+                DB::raw('COUNT(*) as total'),
+                DB::raw('SUM(is_correct) as hits'),
+                DB::raw('ROUND(SUM(is_correct) / COUNT(*) * 100, 1) as rate')
+            )
+            ->groupBy('subjects.id', 'subjects.name')
+            ->orderBy('rate')
+            ->get();
 
-        $userId = $attempt->user_id;
-
-        // pega estatísticas globais do usuário
+        /* ============================================================
+        4. SUGESTÕES INTELIGENTES (base histórico)
+        ============================================================ */
         $userStats = UserTopicStat::with('topic.subject')
             ->where('user_id', $userId)
             ->get()
             ->map(function ($stat) {
 
                 $rate = $stat->total_attempts > 0
-                    ? round(($stat->correct_attempts / $stat->total_attempts) * 100, 0)
+                    ? round(($stat->correct_attempts / $stat->total_attempts) * 100)
                     : 0;
+
+                $level = $rate < 40 ? 'Crítico' : ($rate < 70 ? 'Atenção' : 'OK');
 
                 return [
                     'id'      => $stat->topic_id,
                     'name'    => $stat->topic->name,
                     'subject' => $stat->topic->subject->name ?? 'Geral',
                     'rate'    => $rate,
-                    'level'   => $rate < 40 ? 'Crítico' : ($rate < 70 ? 'Atenção' : 'OK'),
+                    'level'   => $level,
                 ];
             });
 
-        // divide por categorias
         $critical = $userStats->where('level', 'Crítico')->sortBy('rate')->take(3);
         $warn     = $userStats->where('level', 'Atenção')->sortBy('rate')->take(3);
         $ok       = $userStats->where('level', 'OK')->sortByDesc('rate')->take(2);
 
-        // frases automáticas
         $suggestionBank = [
             'Crítico' => [
                 "Refaça pelo menos 10 questões desse tópico até superar 70%.",
@@ -107,12 +135,12 @@ class ResultController extends Controller{
             ],
         ];
 
-        // monta lista final
-        $finalSuggestions = collect();
+        $suggestions_global = collect();
 
-        $addItem = function ($topic) use (&$finalSuggestions, $suggestionBank) {
+        $addSuggestion = function ($topic) use (&$suggestions_global, $suggestionBank) {
             $msg = $suggestionBank[$topic['level']][array_rand($suggestionBank[$topic['level']])];
-            $finalSuggestions->push([
+            $suggestions_global->push([
+                'id'      => $topic['id'],        // <<<<<<<<<<<<<< ADICIONAR
                 'topic'   => $topic['name'],
                 'level'   => $topic['level'],
                 'rate'    => $topic['rate'],
@@ -120,22 +148,22 @@ class ResultController extends Controller{
             ]);
         };
 
-        foreach ($critical as $t) { $addItem($t); }
-        foreach ($warn     as $t) { $addItem($t); }
-        foreach ($ok       as $t) { $addItem($t); }
+        foreach ($critical as $t) { $addSuggestion($t); }
+        foreach ($warn     as $t) { $addSuggestion($t); }
+        foreach ($ok       as $t) { $addSuggestion($t); }
 
-        $suggestions_global = $finalSuggestions;
 
-        // gera metas simples com base nos tópicos críticos/atenção
-        $goals = collect();
+        /* ============================================================
+        5. METAS DE ESTUDO AUTOMÁTICAS
+        ============================================================ */
+        $studyGoals = collect();
 
         foreach ($byTopic as $t) {
-            $rate = $t['rate'];
 
-            if ($rate < 40) {
+            if ($t['rate'] < 40) {
                 $title = "Reforçar tópico crítico: {$t['name']}";
                 $desc  = "Refaça pelo menos 10 questões de \"{$t['name']}\" até superar 70% de acerto.";
-            } elseif ($rate < 70) {
+            } elseif ($t['rate'] < 70) {
                 $title = "Revisar tópico em atenção: {$t['name']}";
                 $desc  = "Revise a teoria e refaça questões que errou no tópico \"{$t['name']}\".";
             } else {
@@ -144,8 +172,8 @@ class ResultController extends Controller{
 
             $goal = StudyGoal::firstOrCreate(
                 [
-                    'user_id'  => $attempt->user_id,
-                    'topic_id' => $t['id'],
+                    'user_id'    => $userId,
+                    'topic_id'   => $t['id'],
                     'attempt_id' => $attempt->id,
                 ],
                 [
@@ -156,40 +184,20 @@ class ResultController extends Controller{
                 ]
             );
 
-            $goals->push($goal);
+            $studyGoals->push($goal);
         }
 
-        $studyGoals = $goals;
 
-        // transforma $bySubject em array de objetos
-        $bySubject = $bySubject->map(function($item, $name){
-            return [
-                'subject' => $name,
-                'total'   => $item['total'],
-                'hits'    => $item['hits'],
-                'rate'    => $item['rate'],
-            ];
-        })->values()->toArray();
-
-        // transforma $byTopic em array plano
-        $byTopic = $byTopic->map(fn($t)=>[
-            'id'      => $t['id'],
-            'name'    => $t['name'],
-            'subject' => $t['subject'],
-            'total'   => $t['total'],
-            'hits'    => $t['hits'],
-            'rate'    => $t['rate'],
-        ])->values()->toArray();
-
-        // -----------------------------------------------
-        // RETORNO PARA VIEW
-        // -----------------------------------------------
+        /* ============================================================
+        6. RETORNO PARA VIEW
+        ============================================================ */
         return view('results.show', [
             'attempt'            => $attempt,
             'bySubject'          => $bySubject,
             'byTopic'            => $byTopic,
+            'global_subjects'    => $global_subjects,  // <<< NOVO
             'suggestions_global' => $suggestions_global,
-            'studyGoals'     => $studyGoals,
+            'studyGoals'         => $studyGoals,
         ]);
     }
 
@@ -201,15 +209,49 @@ class ResultController extends Controller{
     }
 
     public function destroy(\App\Models\Attempt $attempt){
-        // Só permite excluir se for do usuário logado
         if ($attempt->user_id !== auth()->id()) {
             abort(403);
         }
 
-        // Deleta respostas associadas
+        $userId = $attempt->user_id;
+
+        // ===============================================
+        // 1. REVERTER ESTATÍSTICAS DE TÓPICOS (UserTopicStat)
+        // ===============================================
+        foreach ($attempt->answers as $answer) {
+            foreach ($answer->question->topics as $topic) {
+
+                $stat = \App\Models\UserTopicStat::where('user_id', $userId)
+                    ->where('topic_id', $topic->id)
+                    ->first();
+
+                if ($stat) {
+                    // Remove 1 tentativa
+                    $stat->total_attempts = max(0, $stat->total_attempts - 1);
+
+                    // Remove acerto caso tenha acertado
+                    if ($answer->is_correct) {
+                        $stat->correct_attempts = max(0, $stat->correct_attempts - 1);
+                    }
+
+                    // Se zerou tudo, pode limpar o registro
+                    if ($stat->total_attempts == 0 && $stat->correct_attempts == 0) {
+                        $stat->delete();
+                    } else {
+                        $stat->save();
+                    }
+                }
+            }
+        }
+
+        // ===============================================
+        // 2. Deletar respostas
+        // ===============================================
         $attempt->answers()->delete();
 
-        // Deleta o próprio registro
+        // ===============================================
+        // 3. Deletar o simulado
+        // ===============================================
         $attempt->delete();
 
         return redirect()

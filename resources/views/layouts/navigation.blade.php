@@ -20,6 +20,10 @@
                 <x-nav-link :href="route('results.history')" :active="request()->routeIs('results.history')" class="nav-link">
                     {{ __('Histórico') }}
                 </x-nav-link>
+                <x-nav-link href="{{ route('study-goals.index') }}"
+                            :active="request()->routeIs('study-goals.index')">
+                    Metas de Estudo
+                </x-nav-link>
                 @if(auth()->user()?->is_admin)
                 <x-nav-link :href="route('admin.questions.index')"
                             :active="request()->routeIs('admin.questions.*')"
