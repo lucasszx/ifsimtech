@@ -33,7 +33,6 @@ Thumbs.db
 /.idea/
 /.vscode/
 .env
-.env.*
 .phpunit.result.cache
 composer.lock
 npm-debug.log*
